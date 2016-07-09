@@ -7,8 +7,8 @@ import DealersCtrl from './dealers/dealers.controller';
 import DealerCtrl from './dealers/dealer.controller';
 import CarCtrl from './dealers/car.controller';
 
-
-angular.module('carnagy', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ui.select', 'ngSanitize', 'highcharts-ng', 'hightChartService'])
+angular.module('carnagy', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource', 
+'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ui.select', 'ngSanitize', 'highcharts-ng', 'hightChartService', 'dealerModule'])
     .controller('MainCtrl', MainCtrl)
     .controller('NavbarCtrl', NavbarCtrl)
     .controller('SidebarCtrl', SidebarCtrl)
@@ -90,93 +90,6 @@ angular.module('carnagy', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource',
             v: '3.17',
             libraries: 'weather,geometry,visualization'
         });
-
-        function groupBy(ary, keyFunc) {
-            var r = {};
-            ary.forEach(function (x) {
-                var y = keyFunc(x);
-                r[y] = (r[y] || []).concat(x);
-            });
-            return Object.keys(r).map(function (y) {
-                return r[y];
-            });
-        }
-        var dealersByCity = window.dealersByCity;
-        var groupByProvince = groupBy(dealersByCity, function (x) {
-            return x.province;
-        });
-        var provinces = groupByProvince.map(function (c) {
-            var groupByCity = groupBy(c, function (x) {
-                return x.cityName.toLowerCase();
-            });
-            var province = {
-                name: '',
-                city: []
-            };
-            groupByCity.forEach(function (city) {
-                province.name = city[0].province;
-                //s.charAt(0).toUpperCase() + s.substr(1)
-                province.city.push({
-                    name: city[0].cityName.charAt(0).toUpperCase() + city[0].cityName.substr(1),
-                    dealersCount: city[0].dealers.length
-                });
-            });
-            province.city.sort(function (a, b) {
-                if (a.name > b.name) {
-                    return 1;
-                }
-                if (a.name < b.name) {
-                    return -1;
-                }
-                return 0;
-            });
-            return province;
-        });
-        provinces.sort(function (a, b) {
-            if (a.name > b.name) {
-                return 1;
-            }
-            if (a.name < b.name) {
-                return -1;
-            }
-            return 0;
-        });
-
-        var parser = document.createElement('a');
-        var max = 1;
-        var min = -2;
-        var getValueDifference = function (dealer) {
-            var result = (Math.random() * (max - min) + min).toFixed(2);
-            dealer.valueDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
-            dealer.valueColor = result > 0 ? '#5cb85c' : '#d9534f';
-        };
-        var getAmountDifference = function (dealer) {
-            var result = (Math.random() * (max - min) + min).toFixed(2);
-            dealer.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
-            dealer.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
-        };
-
-        var dealers = Array.prototype.concat.apply([], dealersByCity.map(dc => dc.dealers));
-        dealers.forEach(function (dealer, index) {
-            if (dealer.value)
-                getValueDifference(dealer);
-
-            if (dealer.cars.length)
-                getAmountDifference(dealer);
-
-            dealer.id = index;
-            parser.href = dealer.dealerUrl;
-            dealer.domain = parser.hostname;
-            dealer.year = 2015;
-        });
-        var selectedDealer = function (dealers, dealerName) {
-            dealers.forEach(function (dealer) {
-                if (dealer.name == dealerName) {
-                    dealer.selected = true;
-                }
-            });
-        };
-        selectedDealer(dealers, window.selectedDealerName);
         $stateProvider
             .state('main', {
                 url: '/',
@@ -191,11 +104,11 @@ angular.module('carnagy', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource',
             .state('dealers', {
                 url: '/dealers',
                 resolve: {
-                    dealers: function () {
-                        return dealers;
+                    dealers: function (dealerService) {
+                        return dealerService.getDealers();
                     },
-                    provinces: function () {
-                        return provinces;
+                    provinces: function (dealerService) {
+                        return dealerService.getProvinces();
                     }
                 },
                 templateUrl: 'app/dealers/dealers.html',
@@ -204,9 +117,8 @@ angular.module('carnagy', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource',
             .state('dealer', {
                 url: '/dealer/:id',
                 resolve: {
-                    dealer: function ($stateParams) {
-                        console.log('dealer ' + $stateParams.id);
-                        return dealers.filter(d => d.id == $stateParams.id)[0];
+                    dealer: function ($stateParams,dealerService) {
+                        return dealerService.getDealerById($stateParams.id);
                     },
                 },
                 templateUrl: 'app/dealers/dealer.html',
