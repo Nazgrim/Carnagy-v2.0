@@ -152,163 +152,124 @@
 //     } (Highcharts));
 // });
 var hightChartCreatorModule = (function () {
-    var categories1;
-    var series = [
-        {
-            "name": "Enclave",
-            "data": [{
-                "y": 51,
+    function getMarket() {
+        return [
+            {
+                "category": { dealerId: 1, name: "Enclave", parentId: 0, hasSubCategories: false },
                 "name": "Enclave",
-                "drilldown": "Enclave",
-                "x": 0
-            }]
-        }, {
-            "name": "Encore",
-            "data": [{
-                category: { id: 2, name: "Encore" },
-                "y": 49,
-                "name": "Encore",
-                "x": 1
-            }]
-        }, {
-            "name": "LaCrosse",
-            "data": [{
-                "y": 52,
-                "name": "LaCrosse",
-                "x": 2
-            }]
-        }, {
-            "name": "Regal",
-            "data": [{
-                "y": 52,
-                "name": "Regal",
-                "x": 3
-            }]
-        }, {
-            "name": "Verano",
-            "data": [{
-                "y": 52,
-                "name": "Verano",
-                "x": 4
-            }]
-        }, {
-            "name": "Dealer",
-            "data": [{
-                "name": "Dealer",
-                "y": 50,
-                "drilldown": "Enclave"
-            }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }],
-            "color": "#FF0000"
-        }];
-    var series2 = [
-        {
-            "name": "Enclave1",
-            "data": [{
-                "y": 51,
-                "name": "Enclave1",
-                "drilldown": "Enclave",
-                "x": 0
-            }]
-        }, {
-            "name": "Encore1",
-            "data": [{
-                "y": 49,
-                "name": "Encore1",
-                "x": 1
-            }]
-        }, {
-            "name": "LaCrosse1",
-            "data": [{
-                "y": 52,
-                "name": "LaCrosse1",
-                "x": 2
-            }]
-        }, {
-            "name": "Regal1",
-            "data": [{
-                "y": 52,
-                "name": "Regal1",
-                "x": 3
-            }]
-        }, {
-            "name": "Verano1",
-            "data": [{
-                "y": 52,
-                "name": "Verano1",
-                "x": 4
-            }]
-        }, {
-            "name": "Dealer1",
-            "data": [{
-                "y": 50,
-                "drilldown": "Enclave1"
-            }, {
-                    "y": 50
-                }, {
-                    "y": 50
-                }, {
-                    "y": 50
-                }, {
-                    "y": 50
-                }],
-            "color": "#FF0000"
-        }];
-    var drilldown = {
-        "series": [{
-            id: 'Enclave',
-            "name": "Enclave",
-            data: [{
-                name: 'Enclave01',
-                y: 4,
-                drilldown: 'Enclave1'
-            }]
-        }, {
-                id: 'Enclave',
-                "name": "Enclave2",
-                data: [{
-                    name: 'Enclave02',
-                    y: 6,
-                    drilldown: 'Enclave1'
+                "data": [{
+                    "y": 51,
+                    "name": "Enclave",
+                    "x": 0
                 }]
             }, {
-                id: 'Enclave1',
-                "name": "Enclave1",
-                data: [{
-                    name: 'East',
-                    y: 41,
-                    drilldown: 'Enclave2'
-                },
-                    ['West', 21],
-                    ['North', 11],
-                    ['South', 41]
-                ]
+                "category": { dealerId: 2, name: "Encore", parentId: 0, hasSubCategories: true },
+                "name": "Encore",
+                "data": [{
+                    "y": 49,
+                    "name": "Encore",
+                    "x": 1
+                }]
             }, {
-                id: 'Enclave2',
-                "name": "Enclave2",
-                data: [{
-                    name: 'East',
-                    y: 412
-                },
-                    ['West', 212],
-                    ['North', 112],
-                    ['South', 412]
-                ]
-            }]
-    };
+                "category": { dealerId: 3, name: "LaCrosse", parentId: 0, hasSubCategories: false },
+                "name": "LaCrosse",
+                "data": [{
+                    "y": 52,
+                    "name": "LaCrosse",
+                    "x": 2
+                }]
+            }, {
+                "category": { dealerId: 4, name: "Regal", parentId: 0, hasSubCategories: false },
+                "name": "Regal",
+                "data": [{
+                    "y": 52,
+                    "name": "Regal",
+                    "x": 3
+                }]
+            }, {
+                "category": { dealerId: 5, name: "Verano", parentId: 0, hasSubCategories: false },
+                "name": "Verano",
+                "data": [{
+                    "y": 52,
+                    "name": "Verano",
+                    "x": 4
+                }]
+            }, {
+                "category": { dealerId: 6, name: "AWD", parentId: 2, hasSubCategories: false },
+                "name": "AWD",
+                "data": [{
+                    "y": 152,
+                    "name": "AWD",
+                    "x": 0
+                }]
+            }, {
+                "category": { id: 7, name: "FWD", parentId: 2, hasSubCategories: false },
+                "name": "FWD",
+                "data": [{
+                    "y": 102,
+                    "name": "FWD",
+                    "x": 1
+                }]
+            }];
+    }
+    function getDealer() {
+        return [
+            {
+                "category": { name: "Dealer", parentId: 0, hasSubCategories: false },
+                "name": "Dealer",
+                "data": [
+                    {
+                        "name": "Dealer1",
+                        "y": 50
+                    }, {
+                        "name": "Dealer",
+                        "y": 50
+                    }, {
+                        "name": "Dealer",
+                        "y": 50
+                    }, {
+                        "name": "Dealer",
+                        "y": 50
+                    }, {
+                        "name": "Dealer",
+                        "y": 50
+                    }],
+                "color": "#FF0000"
+            }, {
+                "category": { name: "Dealer", parentId: 2, hasSubCategories: false },
+                "name": "Dealer",
+                "data": [
+                    {
+                        "name": "Dealer",
+                        "y": 140
+                    }, {
+                        "name": "Dealer",
+                        "y": 110
+                    }],
+                "color": "#FF0000"
+            }];
+    }
+    function getData(parentId) {
+        var result = [];
+        var market = getMarket();
+        var categories = [];
+        for (var i = 0; i < market.length; i++) {
+            if (market[i].category.parentId == parentId) {
+                result.push(market[i]);
+                categories.push(market[i].name);
+            }
+        }
 
-    var test123 = {
+        var dealer = getDealer();
+        for (var i = 0; i < dealer.length; i++) {
+            if (dealer[i].category.parentId == parentId) {
+                result.push(dealer[i]);
+            }
+        }
+        return { series: result, categories: categories };
+    }
+
+    var baseOption = {
         "options": {
             chart: {
                 type: "column",
@@ -345,15 +306,6 @@ var hightChartCreatorModule = (function () {
         xAxis: {
             type: 'category'
         },
-        // xAxis: {
-        //     minRange: 0.1,
-        //     categories: [
-        //         'Jan',
-        //         'Feb',
-        //         'Mar'
-        //     ],
-        //     crosshair: true
-        // },
         yAxis: {
             min: 0,
             title: {
@@ -380,122 +332,36 @@ var hightChartCreatorModule = (function () {
                 }
             }
 
-        },
-        series: series.slice(0)
-        // series: [],
-        // drilldown: {
-        //     series:
-        //     [
-        //         {
-        //             id: 'Enclave',
-        //             data:
-        //             [
-        //                 { "name": "Enclave", "data": [[0, 21]] },
-        //                 { "name": "Encore", "data": [[1, 29]] },
-        //                 { "name": "LaCrosse", "data": [[2, 22]] },
-        //                 { "name": "Regal", "data": [[3, 22]] },
-        //                 { "name": "Verano", "data": [[4, 22]] },
-        //                 { "name": "Dealer", "data": [[0, 20], [1, 20], [2, 20], [3, 20], [4, 20]], "color": "#FF0000" }
-        //             ]
-        //         }
-        //     ]
-        // }
+        }
     }
 
-
-    var xAxis = {
-        minRange: 0.1,
-        categories: [],
-        crosshair: true
-    };
-
     return {
-        getSeries1: function () {
-            return [
-        {
-            "name": "Enclave",
-            "data": [{
-                "y": 51,
-                "name": "Enclave",
-                "drilldown": "Enclave",
-                "x": 0
-            }]
-        }, {
-            "name": "Encore",
-            "data": [{
-                category: { id: 2, name: "Encore" },
-                "y": 49,
-                "name": "Encore",
-                "x": 1
-            }]
-        }, {
-            "name": "LaCrosse",
-            "data": [{
-                "y": 52,
-                "name": "LaCrosse",
-                "x": 2
-            }]
-        }, {
-            "name": "Regal",
-            "data": [{
-                "y": 52,
-                "name": "Regal",
-                "x": 3
-            }]
-        }, {
-            "name": "Verano",
-            "data": [{
-                "y": 52,
-                "name": "Verano",
-                "x": 4
-            }]
-        }, {
-            "name": "Dealer",
-            "data": [{
-                "name": "Dealer",
-                "y": 50,
-                "drilldown": "Enclave"
-            }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }, {
-                    "name": "Dealer",
-                    "y": 50
-                }],
-            "color": "#FF0000"
-        }];
+        setChart: function (chart, parentId) {
+            var len = chart.series.length;
+            for (var i = 0; i < len; i++) {
+                chart.series[0].remove();
+            }
+            var series = getData(parentId);
+            for (var i = 0; i < series.series.length; i++) {
+                chart.addSeries(series.series[i]);
+            }
+            chart.xAxis.categories = series.categories;
+            chart.redraw()
         },
-        getSeries2: function () {
-            return series2.slice(0);
+        setChart2: function (chart, parentId) {
+            var len = chart.series.length;
+            chart.series = [];
+            var series = getData(parentId);
+            for (var i = 0; i < series.series.length; i++) {
+                chart.series.push(series.series[i]);
+            }
+            chart.xAxis.categories = series.categories;
         },
-        getCategories: function () {
-            return categories;
-        },
-        getOptions: function (categories, id, category) {
-
-            // categories1=category;
-            // var delaerSeris = { name: 'Dealer', data: [] };
-            // var series = [];
-            // var dealerSeries = { name: 'Dealer', data: [], color: '#FF0000' };
-            // categories.forEach(function (category, index) {
-            //     if (category.parentId == id) {
-            //         //xAxis.categories.push(category.name);
-            //         var data = [];
-            //         data.push({ y: category.market, name: category.name, drilldown: category.name, x: index });
-            //         dealerSeries.data.push({ y: category.dealer, drilldown: category.name });
-            //         series.push({ name: category.name, data: data });
-            //     }
-            // });
-            //series.push(dealerSeries);
-            //test123.xAxis = xAxis;
-            //test123.series = series;
-            return test123;
+        getOptions: function () {
+            var abc = getData(0);
+            baseOption.series = abc.series;
+            baseOption.xAxis.categories = abc.categories;
+            return baseOption;
         }
     }
 } ());
