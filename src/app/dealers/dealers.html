@@ -1,0 +1,107 @@
+<div class="row" style="margin-bottom: 15px;">
+    <h1 class="col-md-6" style="margin:0;">Dealers</h1>
+    <div class="col-md-6">
+        <div class="form-inline">
+            <div class="form-group pull-right" style="margin-left: 4px;">
+                <select class="form-control">
+                    <option>Last week</option>
+                    <option>Last month</option>
+                    <option>Last 3 months</option>
+                    <option>YTD</option>
+                </select>
+            </div>
+            <div class="form-group pull-right">
+                <select class="form-control">
+                    <option>Any location</option>
+                    <option>Province</option>
+                    <option>National</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ui-gmap-google-map id="googleMap" center="map.center" zoom="map.zoom" options="map.options" bounds="map.bounds">
+            <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'" click="'onClick'" clusteroptions="map.clusterOptions"
+            docluster="true">
+                <ui-gmap-windows show="show">
+                    <div ng-non-bindable style="width:100px">
+                        <a href="{{url}}">{{title}}</a>
+                    </div>
+                </ui-gmap-windows>
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+    </div>
+</div>
+<div class="row" style="margin-top:10px;">
+    <div class="col-md-2">
+        <ui-select ng-model="selectedProvince.selected" on-select="filterProvince()" theme="bootstrap" ng-disabled="disabled">
+            <ui-select-match placeholder="Any Province">
+                <span>{{$select.selected.name}}</span>
+                <span class="glyphicon glyphicon-remove" ng-click="clearProvince($event)"></span>
+                </button>
+            </ui-select-match>
+            <ui-select-choices repeat="province in provinces | filter: $select.search">
+                <span ng-bind-html="province.name | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="col-md-2">
+        <ui-select ng-model="selectedCity.selected" on-select="filterCity()" theme="bootstrap" ng-disabled="disabled">
+            <ui-select-match placeholder="Any City">
+                <span>{{$select.selected.name}}</span>
+                <span class="glyphicon glyphicon-remove" ng-click="clearCity($event)"></span>
+            </ui-select-match>
+            <ui-select-choices repeat="city in selectedProvince.selected.city | filter: $select.search">
+                <span ng-bind-html="city.name+' - '+ city.dealersCount | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="col-md-3 col-md-offset-5">
+        <div class="form-group pull-right">
+            <input type="text" class="form-control" id="searchFilter" ng-model="searchFilter" placeholder="Search">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-sortable">
+            <thead>
+                <tr>
+                    <th ng-click="orderByField('name')" ng-class="{ 'sorted': orderBy.field === 'name', 'sorted-desc': orderBy.desc }">Name</th>
+                    <th ng-click="orderByField('dealerPlace')" ng-class="{ 'sorted': orderBy.field === 'dealerPlace', 'sorted-desc': orderBy.desc }">Location</th>
+                    <th ng-click="orderByField('domain')" ng-class="{ 'sorted': orderBy.field === 'domain', 'sorted-desc': orderBy.desc }">Website</th>
+                    <th ng-click="orderByField('value')" ng-class="{ 'sorted': orderBy.field === 'value', 'sorted-desc': orderBy.desc }">Value</th>
+                    <th ng-click="orderByField('cars')" ng-class="{ 'sorted': orderBy.field === 'cars', 'sorted-desc': orderBy.desc }">Cars</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class="dealer.selected?'success':''" ng-repeat="dealer in filteredDealers() | orderBy: orderBy.field : orderBy.desc | filter: searchFilter">
+                    <td>
+                        <a ui-sref="dealer({ id: dealer.id})" ng-bind-html="::dealer.name"></a>
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-map-marker"></span>&nbsp;{{::dealer.dealerPlace}}</td>
+                    <td>
+                        <a ng-if="dealer.dealerUrl!=''" href="{{::dealer.dealerUrl}}" target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>&nbsp;{{::dealer.domain}}
+                        </a>
+                        <span ng-if="dealer.dealerUrl==''">N/A</span>
+                    </td>
+                    <td>{{::dealer.value | currency}}
+                        <span style="color: #5cb85c;">&nbsp;{{::dealer.valueDifference}}</span>
+                    </td>
+                    <td>{{::dealer.cars.length}}
+                        <span style="color: #d9534f;">&nbsp;{{::dealer.amountDifference}}</span>
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-search" ng-click="searchDealer(dealer.name)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination ng-model="currentPage" total-items="getDealers().length" max-size="maxSize" boundary-links="true"></pagination>
+    </div>
+</div>
