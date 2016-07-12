@@ -61,12 +61,7 @@
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>Year</th>
-                            <th>Maker</th>
-                            <th>Model</th>
-                            <th>Body Type</th>
-                            <th>Trim</th>
-                            <th>Drivetrain</th>
+                            <th ng-repeat="filter in filters | orderBy: 'order'">{{filter.title}}</th>
                             <th>Count</th>
                             <th></th>
                         </tr>
@@ -77,12 +72,7 @@
                             <td>
                                 <span class="glyphicon glyphicon-menu-down" ng-click="showDetailed(group)"></span>
                             </td>
-                            <td>{{group.key.year}}</td>
-                            <td>{{group.key.make}}</td>
-                            <td>{{group.key.model}}</td>
-                            <td>{{group.key.bodyType}}</td>
-                            <td>{{group.key.styleTrim}}</td>
-                            <td>{{group.key.drivetrain}}</td>
+                            <td ng-repeat="filter in filters | orderBy: 'order'">{{group.key[filter.field]}}</td>
                             <td>{{group.value.length}}</td>
                         </tr>
                         <tr ng-repeat-end="" ng-hide="!group.isDetailed">
