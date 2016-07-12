@@ -43,7 +43,7 @@ class DealerCtrl {
           $scope.currentCategory = c.id;
           $scope.cars = garajModule.getDealers(cars, categories, $scope.currentCategory);
           $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
-          hightChartCreatorModule.setChart2($scope.options, c.id);
+          hightChartCreatorModule.setChart($scope.options, c.id);
           break;
         }
         else {
@@ -60,9 +60,9 @@ class DealerCtrl {
           $scope.currentCategory = selectedSeries.dealerId;
           $scope.categoryList.push(selectedSeries);
           $scope.cars = garajModule.getDealers(cars, categories, $scope.currentCategory);
-          $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
+          $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);          
+          hightChartCreatorModule.setChart($scope.options, selectedSeries.dealerId);
           $scope.$apply();
-          hightChartCreatorModule.setChart(this.chart, selectedSeries.dealerId);
         }
       }
     }

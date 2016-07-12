@@ -348,18 +348,6 @@ var hightChartCreatorModule = (function () {
         },
         setChart: function (chart, parentId) {
             var len = chart.series.length;
-            for (var i = 0; i < len; i++) {
-                chart.series[0].remove();
-            }
-            var series = getData(parentId);
-            for (var i = 0; i < series.series.length; i++) {
-                chart.addSeries(series.series[i]);
-            }
-            chart.xAxis.categories = series.categories;
-            chart.redraw()
-        },
-        setChart2: function (chart, parentId) {
-            var len = chart.series.length;
             chart.series = [];
             var series = getData(parentId);
             for (var i = 0; i < series.series.length; i++) {
