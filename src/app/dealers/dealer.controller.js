@@ -2,6 +2,9 @@
 
 class DealerCtrl {
   constructor($scope, dealer, highchartsNG, hightChartService, dealerService) {
+    highchartsNG.ready(function () {
+      hightChartCreatorModule.overrideHightChart();
+    }, this);
     var categories = dealerService.getCategories();
     var cars = dealer.cars;
 
