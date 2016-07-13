@@ -280,7 +280,6 @@ var hightChartCreatorModule = (function () {
         "options": {
             chart: {
                 type: "column",
-
             },
             plotOptions: {
                 bar: {
@@ -294,21 +293,17 @@ var hightChartCreatorModule = (function () {
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
-                        format: '{point.y:.1f}%'
+                        format: '{point.y:.1f}$'
                     }
                 }
-
-            }
-        },
-        chart: {
-            type: 'column',
-            zoomType: 'x'
+            },
+            exporting: { enabled: false }
         },
         title: {
-            text: 'Monthly Average Rainfall'
+            text: 'title'
         },
         subtitle: {
-            text: 'Source: WorldClimate.com'
+            text: 'subtitle'
         },
         xAxis: {
             type: 'category'
@@ -316,7 +311,7 @@ var hightChartCreatorModule = (function () {
         yAxis: {
             min: 0,
             title: {
-                text: 'Rainfall (mm)'
+                text: 'yAxix title'
             }
         },
         tooltip: {
@@ -327,18 +322,6 @@ var hightChartCreatorModule = (function () {
             footerFormat: '</table>',
             shared: true,
             useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }, series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true
-                }
-            }
-
         }
     }
 

@@ -16,6 +16,8 @@ class DealerCtrl {
     $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
 
     $scope.closeFilter = function (index) {
+      if($scope.filters.length==1) return
+
       var currentDeleteFilter = $scope.filters.splice(index, 1)[0];
       $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
       $scope.deleteFilters.push(currentDeleteFilter);
@@ -56,7 +58,7 @@ class DealerCtrl {
     options.options.plotOptions.series.events = {
       click: function (e) {
         var selectedSeries = this.userOptions.category;
-        if (selectedSeries || selectedSeries.hasSubCategories) {
+        if (selectedSeries && selectedSeries.hasSubCategories) {
           $scope.currentCategory = selectedSeries.dealerId;
           $scope.categoryList.push(selectedSeries);
           $scope.cars = garajModule.getDealers(cars, categories, $scope.currentCategory);

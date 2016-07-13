@@ -10,9 +10,14 @@
             <div class="x_content">
                 Current category:
                 <ol class="breadcrumb">
-                    <li ng-repeat="category in categoryList"><a href ng-click="goBack(category)">{{category.name}}</a></li>
+                    <li ng-repeat="category in categoryList">
+                        <a ng-if="$index != categoryList.length-1" href ng-click="goBack(category)">{{category.name}}</a>
+                        <span ng-if="$index == categoryList.length-1">
+                            {{category.name}}
+                        </span>
+                    </li>
                 </ol>
-                <highchart id="chart0" config="options" hight-chart-d></highchart>
+                <highchart id="chart0" config="options"></highchart>
             </div>
         </div>
     </div>
@@ -41,19 +46,19 @@
             </div>
             <div class="x_content">
                 <div class="clearfix">
-                    <div class="pull-left">
-                        <button ng-click="closeFilter($index)" ng-repeat="filter in filters | orderBy: 'order'" class="btn btn-default">{{filter.title}}<span class="glyphicon glyphicon-remove"></span></button>
+                    <div class="pull-left btn-group">
+                        <button ng-click="closeFilter($index)" ng-repeat="filter in filters | orderBy: 'order'" class="btn btn-default">{{filter.title}} <span class="glyphicon glyphicon-remove"></span></button>
                         <!--<button class="btn btn-default">Maker<span class="glyphicon glyphicon-remove"></span></button>
                     <button class="btn btn-default">Model<span class="glyphicon glyphicon-remove"></span></button>
                     <button class="btn btn-default">Body Type<span class="glyphicon glyphicon-remove"></span></button>
                     <button class="btn btn-default">Trim<span class="glyphicon glyphicon-remove"></span></button>
                     <button class="btn btn-default">Drivetrain<span class="glyphicon glyphicon-remove"></span></button>-->
                     </div>
-                    <div class="pull-right">
-                        <div ng-if="deleteFilters.length!=0">
-                            <select ng-model="currentDeleteFilter" ng-options="filter1.title for filter1 in deleteFilters | orderBy: 'order'"></select>
-                            <button ng-click="addFilter()" class="btn btn-default">AddFilter<span class="glyphicon glyphicon-plus"></span></button>
+                    <div class="btn-group pull-right" ng-if="deleteFilters.length!=0">
+                        <div class="btn-group">
+                            <select class="form-control" ng-model="currentDeleteFilter" ng-options="filter1.title for filter1 in deleteFilters | orderBy: 'order'"></select>
                         </div>
+                        <button ng-click="addFilter()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> AddFilter</button>
                     </div>
                 </div>
                 <table class="table">
@@ -87,6 +92,7 @@
                                             <th>Trim</th>
                                             <th>Drivetrain</th>
                                             <th>Price ($)</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,6 +106,10 @@
                                             <td>{{car.dealerAdvertisedPrice | number: 2}}&nbsp;
                                                 <span style="color: {{car.amountColor}}">{{car.amountDifference}}</span>
                                             </td>
+                                            <td>
+                                                <a ui-sref="car()" class="btn btn-primary">Detail</a>
+                                            </td>
+                                            
                                         </tr>
                                 </table>
                 </table>
