@@ -1,7 +1,7 @@
 'use strict';
 
 class DealerCtrl {
-  constructor($scope, dealer, highchartsNG, hightChartService, dealerService) {
+  constructor($scope, dealer, highchartsNG, dealerService) {
     highchartsNG.ready(function () {
       hightChartCreatorModule.overrideHightChart();
     }, this);
@@ -113,7 +113,7 @@ class DealerCtrl {
   }
 }
 
-DealerCtrl.$inject = ['$scope', 'dealer', 'highchartsNG', 'hightChartService', 'dealerService'];
+DealerCtrl.$inject = ['$scope', 'dealer', 'highchartsNG', 'dealerService'];
 
 export default DealerCtrl;
 
