@@ -5,21 +5,21 @@
                 <h3>The cars is in such price segment</h3>
             </div>
             <div class="ibox-content ">
-                <div class="row ">
-                    <div class="col-md-4 ">
+                <div class="row" >
+                    <div class="col-md-4" ng-repeat="car in cars">
                         <div class="ibox " style="height:469px ">
                             <div class="ibox-title ">
-                                <h3>Car 1<span class="glyphicon glyphicon-remove pull-right "></span></h3>
+                                <h3>{{car.name}}<span class="glyphicon glyphicon-remove pull-right "></span></h3>
                             </div>
                             <div class="ibox-content ">
-                                <img src="../app/img/car1.png " style="width:100% ">
+                                <img ng-src="{{car.imgUrl}}" style="width:100% ">
                                 <ul class="list-group borderless ">
                                     <li class="list-group-item ">
                                         <ul class="row list-inline ">
                                             <li class="col-md-6 ">
                                                 <label>Maker</label>
                                             </li>
-                                            <li class="col-md-6 text-center ">Audi</li>
+                                            <li class="col-md-6 text-center ">{{car.maker}}</li>
                                         </ul>
                                     </li>
                                     <li class="list-group-item ">
@@ -27,7 +27,7 @@
                                             <li class="col-md-6 ">
                                                 <label>Model</label>
                                             </li>
-                                            <li class="col-md-6 text-center ">TT</li>
+                                            <li class="col-md-6 text-center ">{{car.model}}</li>
                                         </ul>
                                     </li>
                                     <li class="list-group-item ">
@@ -35,107 +35,17 @@
                                             <li class="col-md-6 ">
                                                 <label>Drivetrain</label>
                                             </li>
-                                            <li class="col-md-6 text-center ">RWD</li>
+                                            <li class="col-md-6 text-center ">{{car.drivetrain}}</li>
                                         </ul>
                                     </li>
                                 </ul>
                                 <div class="row ">
                                     <div class="col-xs-12 col-md-6 ">
                                         <p class="lead ">
-                                            $21.000</p>
+                                            {{car.price | currency}}</p>
                                     </div>
                                     <div class="col-xs-12 col-md-6 text-right ">
                                         <a class="btn btn-danger " href="http://www.jquery2dotnet.com ">Remove of compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="ibox " style="height:469px ">
-                            <div class="ibox-title ">
-                                <h3>Car 2<span class="glyphicon glyphicon-remove pull-right "></span></h3>
-                            </div>
-                            <div class="ibox-content ">
-                                <img src="../app/img/car2.png " style="width:100% ">
-                                <ul class="list-group borderless ">
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Maker</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">Audi</li>
-                                        </ul>
-                                    </li>
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Model</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">TT</li>
-                                        </ul>
-                                    </li>
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Drivetrain</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">RWD</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="row ">
-                                    <div class="col-xs-12 col-md-6 ">
-                                        <p class="lead ">
-                                            $21.000</p>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 text-right ">
-                                        <a class="btn btn-success " href="http://www.jquery2dotnet.com ">Add to compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="ibox " style="height:469px ">
-                            <div class="ibox-title ">
-                                <h3>Car 3<span class="glyphicon glyphicon-remove pull-right "></span></h3>
-                            </div>
-                            <div class="ibox-content ">
-                                <img src="../app/img/car3.png " style="width:100% ">
-                                <ul class="list-group borderless ">
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Maker</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">Audi</li>
-                                        </ul>
-                                    </li>
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Model</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">TT</li>
-                                        </ul>
-                                    </li>
-                                    <li class="list-group-item ">
-                                        <ul class="row list-inline ">
-                                            <li class="col-md-6 ">
-                                                <label>Drivetrain</label>
-                                            </li>
-                                            <li class="col-md-6 text-center ">RWD</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="row ">
-                                    <div class="col-xs-12 col-md-6 ">
-                                        <p class="lead ">
-                                            $21.000</p>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 text-right ">
-                                        <a class="btn btn-success " href="http://www.jquery2dotnet.com ">Add to compare</a>
                                     </div>
                                 </div>
                             </div>
