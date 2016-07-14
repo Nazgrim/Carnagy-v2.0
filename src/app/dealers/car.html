@@ -1,38 +1,4 @@
-<div class="row">
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Price</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.price | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Market Price</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.marketPrice | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Different</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.different | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-</div>
+<car-widgets-panel></car-widgets-panel>
 <div class="row">
     <div class="col-md-12">
         <div class="ibox">
@@ -65,77 +31,15 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="ibox">
-                                    <div class="ibox-title">
-                                        <h3>Information</h3>
-                                    </div>
-                                    <div class="ibox-content">
-                                        <div class="row">
-                                            <div class="col-md-6 ">
-                                                <ul class="list-group borderless ">
-                                                    <li class="list-group-item ">
-                                                        <ul class="row list-inline ">
-                                                            <li class="col-md-6 ">
-                                                                <label>Make</label>
-                                                            </li>
-                                                            <li class="col-md-6 ">Mercedes-Benz</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="list-group-item ">
-                                                        <ul class="row list-inline ">
-                                                            <li class="col-md-6 ">
-                                                                <label>Model</label>
-                                                            </li>
-                                                            <li class="col-md-6 ">C-Class</li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6 ">
-                                                <ul class="list-group borderless ">
-                                                    <li class="list-group-item ">
-                                                        <ul class="row list-inline ">
-                                                            <li class="col-md-6 ">
-                                                                <label>Engine</label>
-                                                            </li>
-                                                            <li class="col-md-6 ">I-4 cyl</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="list-group-item ">
-                                                        <ul class="row list-inline ">
-
-                                                            <li class="col-md-6 ">
-                                                                <label>Drivetrain</label>
-                                                            </li>
-                                                            <li class="col-md-6 ">RWD</li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <car-information></car-information>
                             </div>
                             <div class="col-md-12">
-                                <highchart id="chart1" config="chartConfig"></highchart>
+                                <car-chart></car-chart>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="ibox ">
-                                    <div class="ibox-title ">
-                                        <h3>Dealers</h3>
-                                    </div>
-                                    <div class="ibox-content">
-                                        <img src="../app/img/dealers.JPG " alt="... " style="width:100%">
-                                        <img src="../app/img/dealers.JPG " alt="... " style="width:100%">
-                                        <img src="../app/img/dealers.JPG " alt="... " style="width:100%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <competitors></competitors>
                     </div>
                 </div>
             </div>
