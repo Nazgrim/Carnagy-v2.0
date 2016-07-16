@@ -90,6 +90,46 @@ angular
         };
         selectedDealer(dealers, window.selectedDealerName);
         return {
+            getCompetitors: function (dealerId, carId) {
+                return [
+                    {
+                        name: "Ms. Mary Jane",
+                        price: "$2300. ",
+                        employer: "Agent Avarage Sales",
+                        sales: "12 Sales Today",
+                        color: "aero",
+                        borderColor: "border-aero",
+                    }, {
+                        name: "Ms. Mary Jane",
+                        price: "$2300. ",
+                        employer: "Agent Avarage Sales",
+                        sales: "12 Sales Today",
+                        color: "green",
+                        borderColor: "border-green",
+                    }, {
+                        name: "Ms. Mary Jane",
+                        price: "$2300. ",
+                        employer: "Agent Avarage Sales",
+                        sales: "12 Sales Today",
+                        color: "aero",
+                        borderColor: "border-aero",
+                    }, {
+                        name: "Ms. Mary Jane",
+                        price: "$2300. ",
+                        employer: "Agent Avarage Sales",
+                        sales: "12 Sales Today",
+                        color: "green",
+                        borderColor: "border-green",
+                    }, {
+                        name: "Ms. Mary Jane",
+                        price: "$2300. ",
+                        employer: "Agent Avarage Sales",
+                        sales: "12 Sales Today",
+                        color: "aero",
+                        borderColor: "border-aero",
+                    }
+                ];
+            },
             getDealers: function () {
                 return dealers;
             },

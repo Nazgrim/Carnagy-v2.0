@@ -3,6 +3,9 @@ angular
     .directive('carInformation', function () {
         return {
             restrict: 'E',
-            templateUrl: '/app/directives/car-information/car-information.html'
+            templateUrl: '/app/directives/car-information/car-information.html',
+            controller: ['$scope', function ($scope) {
+                $scope.information = $scope.car.information;
+            }]
         }
     })
