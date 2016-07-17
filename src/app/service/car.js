@@ -23,6 +23,7 @@ angular
                             imgUrl: "../app/img/car1.png",
                             maker: "Audi",
                             model: "TT",
+                            isEmpty:false,
                             drivetrain: "RWD",
                             price: 21000,
                             chartSeries: {
@@ -36,6 +37,7 @@ angular
                             imgUrl: "../app/img/car2.png",
                             maker: "Audi",
                             model: "TT",
+                            isEmpty:false,
                             drivetrain: "RWD",
                             price: 21000,
                             chartSeries: {
@@ -49,6 +51,7 @@ angular
                             imgUrl: "../app/img/car3.png",
                             maker: "Audi",
                             model: "TT",
+                            isEmpty:false,
                             drivetrain: "RWD",
                             price: 21000,
                             chartSeries: {

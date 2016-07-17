@@ -1,6 +1,6 @@
 angular
-  .module("similarCarModule", [])
-  .directive('similarCar', function () {
+  .module("similarCarModule", ['ngAnimate', 'ui.bootstrap'])
+  .directive('similarCar', function ($uibModal) {
     return {
       restrict: 'E',
       templateUrl: '/app/directives/similar-car/similar-car.html',
@@ -12,13 +12,29 @@ angular
               if (car.isAdd) {
                 scope.removeToCompare(car);
               }
+              scope.removedCars.push(car);
               scope.cars[i] = { isEmpty: true, order: i };
               break;
             }
           }
         }
-        scope.add = function (car) {
-
+        scope.removedCars = [];
+        scope.add = function () {
+          var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'modalSimilarCar.html',
+            controller: 'ModalSimilarCarCtrl',
+            resolve: {
+              items: function () {
+                return scope.removedCars;
+              }
+            }
+          });
+          modalInstance.result.then(function (selectedItem) {
+            scope.cars= selectedItem;
+          }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+          });
         }
         scope.removeToCompare = function (car) {
           car.isAdd = false;

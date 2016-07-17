@@ -2,7 +2,9 @@
     <div class="col-md-12 ">
         <div class="ibox ">
             <div class="ibox-title ">
-                <h3>The cars is in such price segment</h3>
+                <h3>The cars is in such price segment
+                    <button ng-show="(cars|filter:{isEmpty:true}).length" class="btn btn-primary pull-right" ng-click="add()">Add car</button>
+                </h3>
             </div>
             <div class="ibox-content ">
                 <div class="row">
@@ -11,6 +13,7 @@
                             <div class="ibox " style="height:469px ">
                                 <div class="ibox-title ">
                                     <h3>{{car.name}}<span ng-click="remove(car)" class="glyphicon glyphicon-remove pull-right "></span></h3>
+
                                 </div>
                                 <div class="ibox-content ">
                                     <img ng-src="{{car.imgUrl}}" style="width:100% ">
@@ -52,9 +55,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div ng-if="car.isEmpty">
-                            <button class="btn btn-primary" ng-click="add">Add car</button>
                         </div>
                     </div>
                 </div>
