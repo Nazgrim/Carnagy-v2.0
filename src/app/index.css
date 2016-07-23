@@ -1,6 +1,18 @@
 body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
+.tile_stats_count .left
+{
+    width: 0px!important;
+}
+.fixed_height_160
+{
+     height: 160px;
+}
+.fixed_height_230
+{
+    height: 230px;
+}
 .borderless li{
     border:0px;
 }
