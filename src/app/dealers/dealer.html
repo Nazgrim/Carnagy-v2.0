@@ -1,6 +1,6 @@
 <div ng-include="'components/toptitles/toptitles.html'"></div>
 
-<div class="row">
+<!--<div class="row">
     <div class="col-md-12">
         <div class="x_panel">
             <div class="x_title">
@@ -21,68 +21,95 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <div class="row">
     <div class="col-md-12">
         <div class="x_panel">
-            <div class="x_title">
+            <div class="x_title clearfix">
                 <h2>Weekly Summary <small>Activity shares</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+                <button ng-if="!groupPanel" ng-click="toogleGropPanel(true)" class="btn btn-primary pull-right">Hide GroupPanel</button>
+                <button ng-if="groupPanel" ng-click="toogleGropPanel(false)" class="btn btn-primary pull-right">Show GroupPanel</button>
             </div>
             <div class="x_content">
-                <div class="clearfix">
-                    <div class="pull-left btn-group">
-                        <button ng-click="closeFilter($index)" ng-repeat="filter in filters | orderBy: 'order'" class="btn btn-default">{{filter.title}} <span class="glyphicon glyphicon-remove"></span></button>
-                        <!--<button class="btn btn-default">Maker<span class="glyphicon glyphicon-remove"></span></button>
-                    <button class="btn btn-default">Model<span class="glyphicon glyphicon-remove"></span></button>
-                    <button class="btn btn-default">Body Type<span class="glyphicon glyphicon-remove"></span></button>
-                    <button class="btn btn-default">Trim<span class="glyphicon glyphicon-remove"></span></button>
-                    <button class="btn btn-default">Drivetrain<span class="glyphicon glyphicon-remove"></span></button>-->
-                    </div>
-                    <div class="btn-group pull-right" ng-if="deleteFilters.length!=0">
-                        <div class="btn-group">
-                            <select class="form-control" ng-model="currentDeleteFilter" ng-options="filter1.title for filter1 in deleteFilters | orderBy: 'order'"></select>
+                <div ng-show="!groupPanel" class="row  sample-show-hide" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <div>
+                            <div class="btn-group pull-left">
+                                <button ng-click="closeFilter($index) " ng-repeat="filter in filters | orderBy: 'order'" class="btn btn-default ">{{filter.title}} <span class="glyphicon glyphicon-remove "></span></button>
+                            </div>
+                            <div class="btn-group pull-right " ng-if="deleteFilters.length!=0 ">
+                                <div class="btn-group ">
+                                    <select class="form-control " ng-model="currentDeleteFilter " ng-options="filter1.title for filter1 in deleteFilters | orderBy: 'order' "></select>
+                                </div>
+                                <button ng-click="addFilter() " class="btn btn-default "><span class="glyphicon glyphicon-plus "></span> Add Group</button>
+                            </div>
                         </div>
-                        <button ng-click="addFilter()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> AddFilter</button>
                     </div>
                 </div>
-                <table class="table">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-inline">
+                            <div class="form-group clearfix">
+                                <select class="form-control">
+                                    <option>All years</option>
+                                    <option>2015</option>
+                                    <option>2014</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>All Makes</option>
+                                    <option>Buick</option>
+                                    <option>Cadilac</option>
+                                    <option>GMC</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>All Body Styles</option>
+                                    <option>SUV</option>
+                                    <option>Coupe</option>
+                                    <option>Sedan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>Any price</option>
+                                    <option>$36000-38000</option>
+                                    <option>$38000-40000</option>
+                                    <option>$40000-42000</option>
+                                </select>
+                            </div>
+                            <div class="form-group pull-right">
+                                <label for="exampleInputName2">Search</label>
+                                <input class="form-control" id="exampleInputName2" placeholder="Name or stock" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table ">
                     <thead>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th ng-repeat="filter in filters | orderBy: 'order'">{{filter.title}}</th>
+                            <th ng-repeat="filter in filters | orderBy: 'order' ">{{filter.title}}</th>
                             <th>Count</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat-start="group in groups">
-                            <td ng-class="group.color"></td>
+                        <tr ng-repeat-start="group in groups ">
+                            <td ng-class="group.color "></td>
                             <td>
-                                <span class="glyphicon glyphicon-menu-down" ng-click="showDetailed(group)"></span>
+                                <span class="glyphicon glyphicon-menu-down " ng-click="showDetailed(group) "></span>
                             </td>
-                            <td ng-repeat="filter in filters | orderBy: 'order'">{{group.key[filter.field]}}</td>
+                            <td ng-repeat="filter in filters | orderBy: 'order' ">{{group.key[filter.field]}}</td>
                             <td>{{group.value.length}}</td>
                         </tr>
-                        <tr ng-repeat-end="" ng-hide="!group.isDetailed">
-                            <td colspan="9">
-                                <table class="table">
+                        <tr ng-repeat-end=" " ng-hide="!group.isDetailed ">
+                            <td colspan="9 ">
+                                <table class="table ">
                                     <thead>
                                         <tr>
                                             <th>Year</th>
@@ -96,7 +123,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="car in group.value">
+                                        <tr ng-repeat="car in group.value ">
                                             <td>{{car.year}}</td>
                                             <td>{{car.make}}</td>
                                             <td>{{car.model}}</td>
@@ -104,80 +131,76 @@
                                             <td>{{car.styleTrim}}</td>
                                             <td>{{car.drivetrain}}</td>
                                             <td>{{car.dealerAdvertisedPrice | number: 2}}&nbsp;
-                                                <span style="color: {{car.amountColor}}">{{car.amountDifference}}</span>
+                                                <span style="color: {{car.amountColor}} ">{{car.amountDifference}}</span>
                                             </td>
                                             <td>
-                                                <a ui-sref="car({ id: 1})" class="btn btn-primary">Detail</a>
+                                                <a ui-sref="car({ id: 1}) " class="btn btn-primary ">Detail</a>
                                             </td>
 
                                         </tr>
                                 </table>
                 </table>
-                </td>
-                </tr>
-                </tbody>
-                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="row ">
+    <div class="col-md-4 ">
+        <div class="ibox ">
+            <div class="ibox-title ">
+                <h3>Market Price</h3>
+            </div>
+            <div class="ibox-content ">
+                <h1 class="no-margins ">{{::car.marketPrice | currency}}</h1>
+                <h3 style="color: #5cb85c; ">+$12,152.03 (1.56%)</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 ">
+        <div class="ibox ">
+            <div class="ibox-title ">
+                <h3>Market Price</h3>
+            </div>
+            <div class="ibox-content ">
+                <h1 class="no-margins ">{{::car.marketPrice | currency}}</h1>
+                <h3 style="color: #5cb85c; ">+$12,152.03 (1.56%)</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 ">
+        <div class="ibox ">
+            <div class="ibox-title ">
+                <h3>Market Price</h3>
+            </div>
+            <div class="ibox-content ">
+                <h1 class="no-margins ">{{::car.marketPrice | currency}}</h1>
+                <h3 style="color: #5cb85c; ">+$12,152.03 (1.56%)</h3>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--<div class="row">
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Market Price</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.marketPrice | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Market Price</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.marketPrice | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Market Price</h3>
-            </div>
-            <div class="ibox-content">
-                <h1 class="no-margins">{{::car.marketPrice | currency}}</h1>
-                <h3 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="ibox">
-            <div class="ibox-title">
+<div class="row ">
+    <div class="col-md-12 ">
+        <div class="ibox ">
+            <div class="ibox-title ">
                 <h3>Mercedes-Benz C-Class</h3>
             </div>
-            <div class="ibox-content">
-                <highchart id="chart0" config="options1"></highchart>
+            <div class="ibox-content ">
+                <highchart id="chart0 " config="options1 "></highchart>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="ibox">
-            <div class="ibox-title">
+<div class="row ">
+    <div class="col-md-12 ">
+        <div class="ibox ">
+            <div class="ibox-title ">
                 <h3>Cars</h3>
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content ">
                 
             </div>
         </div>
@@ -188,20 +211,20 @@
 
 
 
-<div class="row" style="margin-bottom: 15px;">
-    <h1 class="col-md-6" style="margin:0;">Dealer Dashboard</h1>
-    <div class="col-md-6">
-        <div class="form-inline">
-            <div class="form-group pull-right" style="margin-left: 4px;">
-                <select class="form-control">
+<div class="row " style="margin-bottom: 15px; ">
+    <h1 class="col-md-6 " style="margin:0; ">Dealer Dashboard</h1>
+    <div class="col-md-6 ">
+        <div class="form-inline ">
+            <div class="form-group pull-right " style="margin-left: 4px; ">
+                <select class="form-control ">
                     <option>Last week</option>
                     <option>Last month</option>
                     <option>Last 3 months</option>
                     <option>YTD</option>
                 </select>
             </div>
-            <div class="form-group pull-right">
-                <select class="form-control">
+            <div class="form-group pull-right ">
+                <select class="form-control ">
                     <option>Any location</option>
                     <option>Province</option>
                     <option>National</option>
@@ -210,135 +233,150 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-3" style="padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">5th</span>
+<div class="row ">
+    <div class="col-md-12 ">
+        <div class="row ">
+            <div class="col-md-3 " style="padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">5th</span>
                         <h3>Value</h3>
                     </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{::dealer.value | currency}}</h1>
-                        <h3 ng-if="dealer.value" style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
+                    <div class="ibox-content ">
+                        <h1 class="no-margins ">{{::dealer.value | currency}}</h1>
+                        <h3 ng-if="dealer.value " style="color: #5cb85c; ">+$12,152.03 (1.56%)</h3>
                     </div>
                 </div>
 
             </div>
 
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">15th</span>
+            <div class="col-md-3 " style="padding-left: 5px;padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">15th</span>
                         <h3>Cars</h3>
                     </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{::dealer.cars.length}}</h1>
-                        <h3 ng-if="dealer.cars.length" style="color: #d9534f;">-5 (1.14%)</h3>
+                    <div class="ibox-content ">
+                        <h1 class="no-margins ">{{::dealer.cars.length}}</h1>
+                        <h3 ng-if="dealer.cars.length " style="color: #d9534f; ">-5 (1.14%)</h3>
                     </div>
                 </div>
 
             </div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
+            <div class="col-md-3 " style="padding-left: 5px;padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
                         <h3>Dealer</h3>
                     </div>
-                    <div class="ibox-content">
-                        <highchart id="chart1" config="chartConfig"></highchart>
+                    <div class="ibox-content ">
+                        <highchart id="chart1 " config="chartConfig "></highchart>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="padding-left: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">5th</span>
+            <div class="col-md-3 " style="padding-left: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">5th</span>
                         <h3>Value</h3>
                     </div>
-                    <div class="ibox-content">
-                        <highchart id="chart2" config="chartConfigPie"></highchart>
+                    <div class="ibox-content ">
+                        <highchart id="chart2 " config="chartConfigPie "></highchart>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-3" style="padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
+<div class="row ">
+    <div class="col-md-12 ">
+        <div class="row ">
+            <div class="col-md-3 " style="padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
                         <h3>Dealer</h3>
                     </div>
-                    <div class="ibox-content">
-                        <highchart id="chart3" config="chartArearange"></highchart>
+                    <div class="ibox-content ">
+                        <highchart id="chart3 " config="chartArearange "></highchart>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">5th</span>
+            <div class="col-md-3 " style="padding-left: 5px;padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">5th</span>
                         <h3>Value</h3>
                     </div>
-                    <div class="ibox-content">
-                        <highchart id="chart4" config="chartBar"></highchart>
+                    <div class="ibox-content ">
+                        <highchart id="chart4 " config="chartBar "></highchart>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">5th</span>
+            <div class="col-md-3 " style="padding-left: 5px;padding-right: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">5th</span>
                         <h3>Value</h3>
                     </div>
-                    <div class="ibox-content">
-                        <highchart id="chart5" config="chartBar2"></highchart>
+                    <div class="ibox-content ">
+                        <highchart id="chart5 " config="chartBar2 "></highchart>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="padding-left: 5px;">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right" style="color: #aaa;">15th</span>
+            <div class="col-md-3 " style="padding-left: 5px; ">
+                <div class="ibox ">
+                    <div class="ibox-title ">
+                        <span class="pull-right " style="color: #aaa; ">15th</span>
                         <h3>Cars</h3>
                     </div>
-                    <div class="ibox-content">
-                        <table class="table" cellspacing="0" cellpadding="0" border="0" role="grid" id="nationalTopRegions1_table" aria-multiselectable="false"
-                        class="ui-iggrid-table ui-widget-content" aria-describedby="nationalTopRegions1_table_container"
-                        style="table-layout: fixed;">
+                    <div class="ibox-content ">
+                        <table class="table " cellspacing="0 " cellpadding="0 " border="0 " role="grid " id="nationalTopRegions1_table
+                        " aria-multiselectable="false "
+                        class="ui-iggrid-table ui-widget-content " aria-describedby="nationalTopRegions1_table_container "
+                        style="table-layout: fixed; ">
                             <colgroup>
                                 <col>
                                     <col>
                                         <col>
                             </colgroup>
-                            <thead role="rowgroup">
-                                <tr role="row" data-header-row="">
-                                    <th id="nationalTopRegions1_table_Name" role="columnheader" aria-label="Name" tabindex="0" class="ui-iggrid-header ui-widget-header"><span class="ui-iggrid-headertext">Name</span></th>
-                                    <th id="nationalTopRegions1_table_Value" role="columnheader" aria-label="Sales" tabindex="0" class="ui-iggrid-header ui-widget-header"><span class="ui-iggrid-headertext">Sales</span></th>
-                                    <th id="nationalTopRegions1_table_Target" role="columnheader" aria-label="Target" tabindex="0" class="ui-iggrid-header ui-widget-header"><span class="ui-iggrid-headertext">Target</span></th>
+                            <thead role="rowgroup ">
+                                <tr role="row " data-header-row=" ">
+                                    <th id="nationalTopRegions1_table_Name " role="columnheader " aria-label="Name
+                        " tabindex="0 " class="ui-iggrid-header ui-widget-header "><span class="ui-iggrid-headertext ">Name</span></th>
+                                    <th id="nationalTopRegions1_table_Value " role="columnheader " aria-label="Sales
+                        " tabindex="0 " class="ui-iggrid-header ui-widget-header "><span class="ui-iggrid-headertext ">Sales</span></th>
+                                    <th id="nationalTopRegions1_table_Target " role="columnheader " aria-label="Target
+                        " tabindex="0 " class="ui-iggrid-header ui-widget-header "><span class="ui-iggrid-headertext ">Target</span></th>
                                 </tr>
                             </thead>
-                            <tbody role="rowgroup" class="ui-widget-content ui-iggrid-tablebody ui-ig-record ui-iggrid-record">
-                                <tr tabindex="0" role="row" data-id="1321929493" aria-selected="false">
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Name" aria-readonly="false" role="gridcell" class="">Northeast</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Value" aria-readonly="false" role="gridcell" class="">$46,335K</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Target" aria-readonly="false" role="gridcell" class="">$45,845K <span class="clickRight">&nbsp;</span></td>
+                            <tbody role="rowgroup " class="ui-widget-content ui-iggrid-tablebody ui-ig-record ui-iggrid-record ">
+                                <tr tabindex="0 " role="row " data-id="1321929493 " aria-selected="false ">
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Name
+                        " aria-readonly="false " role="gridcell " class=" ">Northeast</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Value
+                        " aria-readonly="false " role="gridcell " class=" ">$46,335K</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Target
+                        " aria-readonly="false " role="gridcell " class=" ">$45,845K <span class="clickRight ">&nbsp;</span></td>
                                 </tr>
-                                <tr tabindex="0" role="row" data-id="2295786220" class="ui-ig-altrecord ui-iggrid-altrecord" aria-selected="false">
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Name" aria-readonly="false" role="gridcell" class="">Southwest</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Value" aria-readonly="false" role="gridcell" class="">$41,861K</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Target" aria-readonly="false" role="gridcell" class="">$38,831K <span class="clickRight">&nbsp;</span></td>
+                                <tr tabindex="0 " role="row " data-id="2295786220 " class="ui-ig-altrecord ui-iggrid-altrecord
+                        " aria-selected="false ">
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Name
+                        " aria-readonly="false " role="gridcell " class=" ">Southwest</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Value
+                        " aria-readonly="false " role="gridcell " class=" ">$41,861K</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Target
+                        " aria-readonly="false " role="gridcell " class=" ">$38,831K <span class="clickRight ">&nbsp;</span></td>
                                 </tr>
-                                <tr tabindex="0" role="row" data-id="2909007837" aria-selected="false">
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Name" aria-readonly="false" role="gridcell" class="">Midwest</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Value" aria-readonly="false" role="gridcell" class="">$37,913K</td>
-                                    <td tabindex="0" aria-describedby="nationalTopRegions1_table_Target" aria-readonly="false" role="gridcell" class="">$38,246K <span class="clickRight">&nbsp;</span></td>
+                                <tr tabindex="0 " role="row " data-id="2909007837 " aria-selected="false ">
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Name
+                        " aria-readonly="false " role="gridcell " class=" ">Midwest</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Value
+                        " aria-readonly="false " role="gridcell " class=" ">$37,913K</td>
+                                    <td tabindex="0 " aria-describedby="nationalTopRegions1_table_Target
+                        " aria-readonly="false " role="gridcell " class=" ">$38,246K <span class="clickRight ">&nbsp;</span></td>
                                 </tr>
                             </tbody>
-                            <tfoot class="" role="rowgroup" id="nationalTopRegions1_table_footer_container" style="display: none;"></tfoot>
+                            <tfoot class=" " role="rowgroup " id="nationalTopRegions1_table_footer_container " style="display:
+                        none; "></tfoot>
                         </table>
                     </div>
                 </div>
@@ -346,11 +384,11 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
+<div class="row ">
+    <div class="col-md-6 ">
 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 ">
 
     </div>
 </div>-->

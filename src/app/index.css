@@ -1,6 +1,13 @@
 body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
+/*animatiion*/
+.sample-show-hide {
+  transition: all linear 0.5s;
+}
+.sample-show-hide.ng-hide {
+  opacity: 0;
+}
 .selected
 {
     color: red

@@ -7,7 +7,9 @@ class DealerCtrl {
     }, this);
     var categories = dealerService.getCategories();
     var cars = dealer.cars;
-
+    $scope.toogleGropPanel = function (flag) {
+      $scope.groupPanel = flag;
+    };
     $scope.deleteFilters = [];
     $scope.categoryList = [{ name: "All", id: 0 }];
     $scope.currentCategory = 0;
@@ -16,7 +18,7 @@ class DealerCtrl {
     $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
 
     $scope.closeFilter = function (index) {
-      if($scope.filters.length==1) return
+      if ($scope.filters.length == 1) return
 
       var currentDeleteFilter = $scope.filters.splice(index, 1)[0];
       $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
@@ -62,7 +64,7 @@ class DealerCtrl {
           $scope.currentCategory = selectedSeries.dealerId;
           $scope.categoryList.push(selectedSeries);
           $scope.cars = garajModule.getDealers(cars, categories, $scope.currentCategory);
-          $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);          
+          $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
           hightChartCreatorModule.setChart($scope.options, selectedSeries.dealerId);
           $scope.$apply();
         }
