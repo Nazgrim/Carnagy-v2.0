@@ -1,6 +1,10 @@
 body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
+.selected
+{
+    color: red
+}
 .tile_stats_count .left
 {
     width: 0px!important;
