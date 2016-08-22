@@ -2,7 +2,15 @@ angular
     .module("dealerModule", []);
 angular
     .module("dealerModule")
-    .service("dealerService", function () {
+    .config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.defaults.withCredentials = true;
+        delete $httpProvider.defaults.headers.common["X-Requested-With"];
+        $httpProvider.defaults.headers.common["Accept"] = "application/json";
+        $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+    }
+    ])
+    .service("dealerService", function ($resource) {
         function groupBy(ary, keyFunc) {
             var r = {};
             ary.forEach(function (x) {
@@ -137,54 +145,55 @@ angular
                 return provinces;
             },
             getDealerById: function (id) {
-                var dealer = dealers[3];
-                dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
-                var max = 1;
-                var min = -2;
-                function randomIntFromInterval(min, max) {
-                    return Math.floor(Math.random() * (max - min + 1) + min);
-                };
-                dealer.cars.forEach(function (car) {
-                    var result = (Math.random() * (max - min) + min).toFixed(2);
-                    switch (randomIntFromInterval(1, 4)) {
-                        case 1:
-                            car.color = "red-market";
-                            break;
-                        case 2:
-                            car.color = "green-market";
-                            break;
-                        case 3:
-                            car.color = "blue-market";
-                            break;
-                        case 4:
-                            car.color = "yellow-market";
-                            break;
-                    }
-                    switch (car.model) {
-                        case "Enclave":
-                            car.category = 1;
-                            break;
-                        case "Encore":
-                            if (car.drivetrain == "AWD") {
-                                car.category = 6;
-                            } else {
-                                car.category = 7;
-                            }
-                            break;
-                        case "LaCrosse":
-                            car.category = 3;
-                            break;
-                        case "Regal":
-                            car.category = 4;
-                            break;
-                        case "Verano":
-                            car.category = 5;
-                            break;
-                    }
-                    car.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
-                    car.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
-                });
-                return dealer;
+                var Dealer = $resource('http://localhost/WepApi/api/dealer/:delearId', { delearId: '@id' });
+                return Dealer.get({ delearId: 123 }, function (dealer) {
+                    dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
+                    var max = 1;
+                    var min = -2;
+                    function randomIntFromInterval(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1) + min);
+                    };
+                    dealer.cars.forEach(function (car) {
+                        var result = (Math.random() * (max - min) + min).toFixed(2);
+                        switch (randomIntFromInterval(1, 4)) {
+                            case 1:
+                                car.color = "red-market";
+                                break;
+                            case 2:
+                                car.color = "green-market";
+                                break;
+                            case 3:
+                                car.color = "blue-market";
+                                break;
+                            case 4:
+                                car.color = "yellow-market";
+                                break;
+                        }
+                        switch (car.model) {
+                            case "Enclave":
+                                car.category = 1;
+                                break;
+                            case "Encore":
+                                if (car.drivetrain == "AWD") {
+                                    car.category = 6;
+                                } else {
+                                    car.category = 7;
+                                }
+                                break;
+                            case "LaCrosse":
+                                car.category = 3;
+                                break;
+                            case "Regal":
+                                car.category = 4;
+                                break;
+                            case "Verano":
+                                car.category = 5;
+                                break;
+                        }
+                        car.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
+                        car.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
+                    });
+                }).$promise;
             },
             getCategories: function () {
                 return [

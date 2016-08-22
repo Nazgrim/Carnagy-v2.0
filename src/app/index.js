@@ -13,7 +13,7 @@ angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', '
     .controller('SidebarCtrl', SidebarCtrl)
     .controller('DealerCtrl', DealerCtrl)
     .controller('CarCtrl', CarCtrl)
-    .controller('ModalSimilarCarCtrl', ModalSimilarCarCtrl)
+    .controller('ModalSimilarCarCtrl', ModalSimilarCarCtrl)   
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('car', {
@@ -28,11 +28,11 @@ angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', '
             })
             .state('dealer', {
                 url: '/dealer',
-                resolve: {
-                    dealer: function ($stateParams, dealerService) {
-                        return dealerService.getDealerById();
-                    },
-                },
+                // resolve: {
+                //     dealer: function ($stateParams, dealerService) {
+                //         return dealerService.getDealerById();
+                //     },
+                // },
                 templateUrl: 'app/dealers/dealer.html',
                 controller: 'DealerCtrl',
             });
