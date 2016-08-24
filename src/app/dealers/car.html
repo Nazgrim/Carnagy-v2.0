@@ -6,13 +6,15 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-4">
-                                <img style="width:100%" src="../app/img/f3q.jpg" />
+                                <img style="width:100%" src="{{carInformation.imgScr}}" />
                             </div>
                             <div class="col-md-8 tile_stats_count">
                                 <div class="left"></div>
                                 <div class="right">
-                                    <h1>2017 Ford Fusion</h1>
-                                    <p>Bodytype - SUV, Trim - Premium, Drivetrain - RWD</p>
+                                    <h1>{{carInformation.name}}</h1>
+                                    <p>
+                                        <span ng-repeat="(key, value) in carInformation.parametrs">{{key}} - {{value}}<span ng-if="!$last">, </span></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -23,16 +25,16 @@
                         <div class="left"></div>
                         <div class="right">
                             <span class="count_top"><i class="fa fa-usd"></i> Average Price</span>
-                            <div class="count">7,325</div>
-                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+                            <div class="count">{{carInformation.averagePrice.value}}</div>
+                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{carInformation.averagePrice.difference}} </i> {{carInformation.averagePrice.date}}</span>
                         </div>
                     </div>
                     <div class="col-md-2 tile_stats_count">
                         <div class="left"></div>
                         <div class="right">
                             <span class="count_top"><i class="fa fa-usd"></i> Your Price</span>
-                            <div class="count">7,325</div>
-                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+                            <div class="count">{{carInformation.dealerPrice.value}}</div>
+                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{carInformation.dealerPrice.difference}} </i> {{carInformation.dealerPrice.date}}</span>
                         </div>
                     </div>
                 </div>

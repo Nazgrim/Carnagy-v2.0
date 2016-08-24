@@ -1,7 +1,7 @@
 'use strict';
 class CarCtrl {
     constructor($scope, carService, id, highchartsNG) {
-        $scope.car = carService.getCarById(id);
+        $scope.carInformation=carService.getInformationById();
         $scope.$on("addToCompareUpEvent", function (event, data) {
             console.log("вверх");
             //$scope.$broadcast('addToCompareDownEvent', data);
