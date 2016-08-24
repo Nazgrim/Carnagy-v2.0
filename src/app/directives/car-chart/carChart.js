@@ -1,11 +1,13 @@
 angular
-    .module("carChartModule", ['highcharts-ng','carModule'])
+    .module("carChartModule", ['highcharts-ng', 'carModule'])
     .directive('carChart', function () {
         return {
             restrict: 'E',
             templateUrl: '/app/directives/car-chart/car-chart.html',
-            controller: function ($scope,carService) {
-                $scope.chartConfig = carService.getchartConfig1($scope);
+            controller: function ($scope, carService) {
+                $scope.chartConfig = carService.getChartConfig($scope).then(function (result) {
+                    $scope.chartConfig = result;
+                });
                 $scope.$on("addToCompareDownEvent", function (event, data) {
                     $scope.chartConfig.series.push(data);
                 })

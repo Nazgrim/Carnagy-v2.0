@@ -1,11 +1,13 @@
 angular
-  .module("similarCarModule", ['ngAnimate', 'ui.bootstrap'])
-  .directive('similarCar', function ($uibModal) {
+  .module("similarCarModule", ['ngAnimate', 'ui.bootstrap', 'carModule'])
+  .directive('similarCar', function ($uibModal, carService) {
     return {
       restrict: 'E',
       templateUrl: '/app/directives/similar-car/similar-car.html',
       link: function (scope, element, attrs) {
-        scope.cars = scope.car.similarCars;
+        carService.getSimilarCars().$promise.then(function (result) {
+          scope.cars = result;
+        });
         scope.remove = function (car) {
           for (var i = 0; i < scope.cars.length; i++) {
             if (scope.cars[i].id == car.id) {
@@ -31,7 +33,7 @@ angular
             }
           });
           modalInstance.result.then(function (selectedItem) {
-            scope.cars= selectedItem;
+            scope.cars = selectedItem;
           }, function () {
             $log.info('Modal dismissed at: ' + new Date());
           });
@@ -43,7 +45,6 @@ angular
         scope.addToCompare = function (car) {
           car.isAdd = true;
           scope.$emit("addToCompareUpEvent", car.chartSeries);
-
         }
       }
     };
