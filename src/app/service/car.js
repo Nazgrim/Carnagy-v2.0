@@ -159,9 +159,59 @@ angular
                         };
                     });
             },
-            getSimilarCars:function(){
+            getSimilarCars: function () {
                 var DealerCar = $resource(baseUrl + '/similarcars/:delearId', { dealerCarId: '@id' });
                 return DealerCar.query({ dealerCarId: 123 });
+            },
+            getPriceTrend: function () {
+                var DealerCar = $resource(baseUrl + '/pricetrend/:delearId', { dealerCarId: '@id' });
+                return DealerCar.get({ dealerCarId: 123 })
+                    .$promise
+                    .then(function (chartData) {
+                        var result = {
+                            options: {
+                                chart: {
+                                    type: 'line',
+                                    height: 300
+                                },
+                                legend: {
+                                    enabled: true
+                                },
+                                exporting: {
+                                    enabled: false
+                                }
+                            },
+                            title: {
+                                text: '',
+                                style: {
+                                    display: 'none'
+                                }
+                            },
+                            subtitle: {
+                                text: '',
+                                style: {
+                                    display: 'none'
+                                }
+                            },
+                            series: chartData.chartSeries,
+                            xAxis: {
+                                categories: chartData.xAxisCategories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '',
+                                    style: {
+                                        display: 'none'
+                                    }
+                                }
+                            }
+                        };
+                        return result;
+                    });
+            },
+            getDealerCompetitors: function () {
+                var DealerCar = $resource(baseUrl + '/dealercompetitors/:delearId', { dealerCarId: '@id' });
+                return DealerCar.query({ dealerCarId: 123 })
             }
         };
     })

@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h3>Dealers</h3>
+            </div>
+            <div class="ibox-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th ng-click="orderByField('name')" ng-class="{ 'sorted': orderBy.field === 'name', 'sorted-desc': orderBy.desc }">Name</th>
+                            <th ng-click="orderByField('dealerPlace')" ng-class="{ 'sorted': orderBy.field === 'dealerPlace', 'sorted-desc': orderBy.desc }">Location</th>
+                            <th ng-click="orderByField('domain')" ng-class="{ 'sorted': orderBy.field === 'domain', 'sorted-desc': orderBy.desc }">Website</th>
+                            <th ng-click="orderByField('cars')" ng-class="{ 'sorted': orderBy.field === 'cars', 'sorted-desc': orderBy.desc }">Cars</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat-start="dealer in dealers">
+                            <td>
+                                <span class="glyphicon glyphicon-menu-down" ng-click="showDetailed(group)"></span></td>
+                            <td>
+                                {{dealer.name}}
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-map-marker"></span>{{dealer.city}}</td>
+                            <td>
+                                <a ng-href="{{dealer.url}}" target="_blank">
+                                    <span class="glyphicon glyphicon-link"></span>&nbsp;{{dealer.webSiteName}}
+                                </a>
+                            </td>
+                            <td>{{dealer.cars.length}}</td>
+                        </tr>
+                        <tr ng-repeat-end="">
+                            <td></td>
+                            <td colspan="4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Maker</th>
+                                            <th>Model</th>
+                                            <th>Body Type</th>
+                                            <th>Trim</th>
+                                            <th>Drivetrain</th>
+                                            <th>Price ($)</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="car in dealer.cars">
+                                            <td>{{car.year}}</td>
+                                            <td>{{car.maker}}</td>
+                                            <td>{{car.model}}</td>
+                                            <td>{{car.bodyType}}</td>
+                                            <td>{{car.styleTrim}}</td>
+                                            <td>{{car.drivetrain}}</td>
+                                            <td>{{car.price.value}}
+                                                <span ng-if='car.price.difference>0' style="color: green">+{{car.price.difference}}</span>
+                                                <span ng-if='car.price.difference<0' style="color: red">{{car.price.difference}}</span>
+                                            </td>
+                                            <td>
+                                                <a ui-href="{{car.url}}" class="btn btn-primary">Open</a>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

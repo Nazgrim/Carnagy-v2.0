@@ -1,21 +1,53 @@
 <div class="row">
-    <div class="col-md-9">
-        <div class="row">
-            <div class="col-md-12">
-                <highchart id="chart1" config="chartConfig"></highchart>
+    <div class="col-md-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="col-md-6">
+                    <h3>Market inventory</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-inline text-right">
+                        <div class="form-group" style="margin-left: 4px;">
+                            <select class="form-control">
+                                <option>Last week</option>
+                                <option>Last month</option>
+                                <option>Last 3 months</option>
+                                <option>YTD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option>Any location</option>
+                                <option>Province</option>
+                                <option>National</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div id="chart-legend">
-            <div ng-if="selectedLegend.currentSelected=='bands'" class="message-view pricing-quality">
-                <span ng-if="selectedLegend.currentBandSelected=='below'" class="below text">A price in this range (less than 15% of sales transactions) represents an outstanding deal for the buyer, but the dealer may be selling at a loss due to aged inventory, less popular colors, demo vehicles, etc.</span>
-                <span ng-if="selectedLegend.currentBandSelected=='great'" class="great text">A price in this range (generally 30% of sales transactions) represents a great deal for car buyers.</span>
-                <span ng-if="selectedLegend.currentBandSelected=='good'" class="good text">A price in this range (generally 25% of sales transactions) represents a good deal for car buyers.</span>
-                <span ng-if="selectedLegend.currentBandSelected=='above'" class="above text">A price in this range (less than 30% of sales transactions) is likely due to limited local inventory, high market demand, inadequately informed buyers, etc.</span>
-            </div>
-            <div ng-if="selectedLegend.currentSelected=='series'" class="message-view pricing-quality">
-                <span>{{selectedLegend.people}} paid between {{selectedLegend.from}}  and {{selectedLegend.to}}</span>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <highchart id="chart1" config="chartConfig"></highchart>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div id="chart-legend">
+                            <div ng-if="selectedLegend.currentSelected=='bands'" class="message-view pricing-quality">
+                                <span ng-if="selectedLegend.currentBandSelected=='below'" class="below text">A price in this range (less than 15% of sales transactions) represents an outstanding deal for the buyer, but the dealer may be selling at a loss due to aged inventory, less popular colors, demo vehicles, etc.</span>
+                                <span ng-if="selectedLegend.currentBandSelected=='great'" class="great text">A price in this range (generally 30% of sales transactions) represents a great deal for car buyers.</span>
+                                <span ng-if="selectedLegend.currentBandSelected=='good'" class="good text">A price in this range (generally 25% of sales transactions) represents a good deal for car buyers.</span>
+                                <span ng-if="selectedLegend.currentBandSelected=='above'" class="above text">A price in this range (less than 30% of sales transactions) is likely due to limited local inventory, high market demand, inadequately informed buyers, etc.</span>
+                            </div>
+                            <div ng-if="selectedLegend.currentSelected=='series'" class="message-view pricing-quality">
+                                <span>{{selectedLegend.people}} paid between {{selectedLegend.from}}  and {{selectedLegend.to}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

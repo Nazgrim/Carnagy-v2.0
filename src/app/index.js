@@ -7,9 +7,9 @@ import ModalSimilarCarCtrl from './dealers/modalSimilarCar.controller';
 
 angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'ui.select', 'highcharts-ng',
     'dealerModule', 'similarCarModule', 
-    'competitorsModule', 'carChartModule', 
+    'carChartModule', 
     'carWidgetsPanelModule','carInformationModule', 
-    'carModule'])
+    'carModule','priceTrendModule','dealerCompetitorsModule'])
     .controller('SidebarCtrl', SidebarCtrl)
     .controller('DealerCtrl', DealerCtrl)
     .controller('CarCtrl', CarCtrl)

@@ -16,55 +16,7 @@ class CarCtrl {
                 }
             }
             //$scope.$broadcast('removeToCompareDownEvent', data);
-        });
-        $scope.chartConfig1 = getPriceTrendChart();
-
-        function getPriceTrendChart() {
-            return {
-                options: {
-                    chart: {
-                        type: 'line',
-                        height: 300
-                    },
-                    legend: {
-                        enabled: true
-                    },
-                    exporting: {
-                        enabled: false
-                    }
-                },
-                title: {
-                    text: '',
-                    style: {
-                        display: 'none'
-                    }
-                },
-                subtitle: {
-                    text: '',
-                    style: {
-                        display: 'none'
-                    }
-                },
-                series: [
-                    {
-                        name: 'Ford Fusion',
-                        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-                    }
-                ],
-                xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                },
-                yAxis: {
-                    title: {
-                        text: '',
-                        style: {
-                            display: 'none'
-                        }
-                    }
-                },
-
-            };
-        }
+        });   
     }
 }
 
