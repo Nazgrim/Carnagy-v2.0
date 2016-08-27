@@ -9,6 +9,12 @@ angular
                 $scope.dealers = carService.getDealerCompetitors().$promise.then(function (dealerCompetitors) {
                     $scope.dealers = dealerCompetitors;
                 });
+                $scope.showDetailed = function (dealer) {
+                    if (dealer.isDetailed)
+                        dealer.isDetailed = false;
+                    else
+                        dealer.isDetailed = true;
+                };
             }]
         }
     })

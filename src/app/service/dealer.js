@@ -145,7 +145,7 @@ angular
                 return provinces;
             },
             getDealerById: function (id) {
-                var Dealer = $resource('http://localhost/WepApi/api/dealer/:delearId', { delearId: '@id' });
+                var Dealer = $resource('http://localhost/WepApi/api/dealer/dealer/:delearId', { delearId: '@id' });
                 return Dealer.get({ delearId: 123 }, function (dealer) {
                     dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
                     var max = 1;

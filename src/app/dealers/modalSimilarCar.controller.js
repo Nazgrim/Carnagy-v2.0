@@ -1,5 +1,5 @@
 class ModalSimilarCarCtrl {
-    constructor($scope, $uibModalInstance, filterFilter, items) {
+    constructor($scope, $uibModalInstance, filterFilter, items, carService) {
         $scope.items = items;
         $scope.ok = function () {
             $uibModalInstance.close(filterFilter($scope.items, { checked: true }));
@@ -10,6 +10,6 @@ class ModalSimilarCarCtrl {
         };
     }
 }
-ModalSimilarCarCtrl.$inject = ['$scope', '$uibModalInstance', 'filterFilter', 'items'];
+ModalSimilarCarCtrl.$inject = ['$scope', '$uibModalInstance', 'filterFilter', 'items', 'carService'];
 
 export default ModalSimilarCarCtrl;
