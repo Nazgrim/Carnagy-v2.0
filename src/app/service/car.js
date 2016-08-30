@@ -4,6 +4,109 @@ angular
     .module("carModule")
     .service("carService", function ($resource) {
         var baseUrl = 'http://localhost/WepApi/api/dealercar';
+        function getPoint(price, min, stepForLine) {
+            var difMinPrice = price - min;
+            var result = difMinPrice * 2 / stepForLine / 2 - 0.5;
+            console.log(result);
+            return result;
+        }
+        function getXaxisPlotLines(msrpPrice, avrPrice, dealerPrice, min, stepForLine) {
+            return [
+                {
+                    value: getPoint(msrpPrice, min, stepForLine),
+                    width: 2,
+                    color: '#FF0000',
+                    label: {
+                        text: 'MSRP price',
+                        verticalAlign: 'middle',
+                        textAlign: 'center'
+                    },
+                    zIndex: 5
+                },
+                {
+                    value: getPoint(avrPrice, min, stepForLine),
+                    width: 2,
+                    color: '#00FF00',
+                    label: {
+                        text: 'Avr. price',
+                        verticalAlign: 'middle',
+                        textAlign: 'center'
+                    },
+                    zIndex: 5
+                },
+                {
+                    value: getPoint(dealerPrice, min, stepForLine),
+                    width: 2,
+                    color: '#0000FF',
+                    label: {
+                        text: 'Your price',
+                        verticalAlign: 'middle',
+                        textAlign: 'center'
+                    },
+                    zIndex: 5
+                }
+            ]
+        }
+        function getXaxisPlotBands(seriesDataLength, $scope, min, stepForLine) {
+            var xAxisPlotBands = [];
+            var xAxisPlotBandsDefault = [
+                {
+                    chartValue: 'below',
+                    labelBtext: 'Exceptional Price',
+                    color: '#FCFFC5',
+                },
+                {
+                    chartValue: 'great',
+                    labelBtext: 'Great Price',
+                    color: '#c4c336',
+                },
+                {
+                    chartValue: 'good',
+                    labelBtext: 'Good price',
+                    color: '#CCFFC5',
+                },
+                {
+                    chartValue: 'above',
+                    labelBtext: 'Above Market',
+                    color: '#4ac336'
+                },
+            ];
+            var from = -0.5;
+            var currentPrice = min;
+            var step = Math.round(seriesDataLength / xAxisPlotBandsDefault.length);
+            for (var i = 0; i < xAxisPlotBandsDefault.length; i++) {
+                var to = from + step;
+                currentPrice = currentPrice + (to * stepForLine);
+                var xAxisPlotBandDefault = xAxisPlotBandsDefault[i];
+                var labelText = '<div><b>' + xAxisPlotBandDefault.labelBtext + '</b></div><div>Less than ' + Math.round(currentPrice);
+                if (i == xAxisPlotBandsDefault.length - 1) {
+                    labelText += ' or more';
+                }
+                labelText += '$</div>';
+                xAxisPlotBands.push({
+                    from: from,
+                    to: to,
+                    color: xAxisPlotBandDefault.color,
+                    events: {
+                        mouseover: function (e) {
+                            $scope.selectedLegend.currentBandSelected = this.options.chartValue;
+                            $scope.$apply();
+                        },
+                        mouseout: function (e) {
+                            $scope.selectedLegend.currentBandSelected = $scope.selectedLegend.bandSelected;
+                            $scope.$apply();
+                        },
+                    },
+                    label: {
+                        text: labelText,
+                        align: 'left',
+                        useHTML: true,
+                    }
+                });
+                from = to;
+            }
+            return xAxisPlotBands;
+        }
         return {
             getInformationById: function (dealerCarId) {
                 var DealerCar = $resource(baseUrl + '/information/:delearId', { dealerCarId: '@id' });
@@ -18,48 +121,11 @@ angular
                 return DealerCar.get({ dealerCarId: 123 })
                     .$promise
                     .then(function (chartData) {
-                        var xAxisPlotBands = [];
-                        var xAxisPlotBandsColors = ['#FCFFC5', '#c4c336', '#CCFFC5', '#4ac336'];
-                        chartData.xAxisPlotBands.forEach(function (item, i) {
-                            var xAxisPlotBand = {
-                                events: {
-                                    mouseover: function (e) {
-                                        $scope.selectedLegend.currentBandSelected = this.options.chartValue;
-                                        $scope.$apply();
-                                    },
-                                    mouseout: function (e) {
-                                        $scope.selectedLegend.currentBandSelected = $scope.selectedLegend.bandSelected;
-                                        $scope.$apply();
-                                    }
-                                },
-                                color: xAxisPlotBandsColors[i],
-                                from: item.from,
-                                to: item.to,
-                                chartValue: item.chartValue,
-                                label: {
-                                    text: '<div><b>' + item.labelBtext + '</b></div><div>' + item.labeltext + '</div>',
-                                    align: 'left',
-                                    useHTML: true,
-                                }
-                            };
-                            xAxisPlotBands.push(xAxisPlotBand);
-                        });
-                        var xAxisPlotLinesColors = ['#FF0000', '#00FF00', '#0000FF'];
-                        var xAxisplotLines = [];
-                        chartData.xAxisPlotLines.forEach(function (item, i) {
-                            var xAxisplotLine = {
-                                color: xAxisPlotLinesColors[i],
-                                width: item.width,
-                                value: item.value,
-                                label: {
-                                    text: item.labelText,
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center'
-                                },
-                                zIndex: 5
-                            };
-                            xAxisplotLines.push(xAxisplotLine);
-                        });
+                        var stepForLine = Math.round((chartData.max - chartData.min) / chartData.seriesData.length);
+                        console.log(stepForLine);
+                        var xAxisplotLines = getXaxisPlotLines(chartData.msrpPrice, chartData.avrPrice, chartData.dealerPrice, chartData.min, stepForLine);
+                        var xAxisPlotBands = getXaxisPlotBands(chartData.seriesData.length, $scope, chartData.min, stepForLine);
+
                         return {
                             "options": {
                                 plotOptions: {
@@ -141,10 +207,16 @@ angular
                                 }
                             },
                             xAxis: {
-                                type: 'category',
                                 plotLines: xAxisplotLines,
                                 plotBands: xAxisPlotBands,
-                                categories: chartData.xAxisCategories
+                                lineWidth: 0,
+                                minorGridLineWidth: 0,
+                                lineColor: 'transparent',
+                                labels: {
+                                    enabled: false
+                                },
+                                minorTickLength: 0,
+                                tickLength: 0
                             },
                             series: [
                                 {
