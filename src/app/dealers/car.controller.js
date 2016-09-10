@@ -1,7 +1,11 @@
 'use strict';
 class CarCtrl {
     constructor($scope, carService, id, highchartsNG) {
-        $scope.carInformation=carService.getInformationById();
+        carService.getInformationById()
+            .$promise
+            .then(function (carInformation) {
+                $scope.carInformation = carInformation;
+            });
         $scope.$on("addToCompareUpEvent", function (event, data) {
             console.log("вверх");
             //$scope.$broadcast('addToCompareDownEvent', data);
@@ -16,7 +20,7 @@ class CarCtrl {
                 }
             }
             //$scope.$broadcast('removeToCompareDownEvent', data);
-        });   
+        });
     }
 }
 

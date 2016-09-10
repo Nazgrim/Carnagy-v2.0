@@ -145,51 +145,51 @@ angular
                 return provinces;
             },
             getDealerById: function (id) {
-                var Dealer = $resource('http://localhost/WepApi/api/dealer/dealer/:delearId', { delearId: '@id' });
-                return Dealer.get({ delearId: 123 }, function (dealer) {
-                    dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
+                var Dealer = $resource('http://localhost/WepApi/api/dealer/dealercars/:delearId', { delearId: '@id' });
+                return Dealer.query({ delearId: 1 }, function (dealerCars) {
+                    //dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
                     var max = 1;
                     var min = -2;
                     function randomIntFromInterval(min, max) {
                         return Math.floor(Math.random() * (max - min + 1) + min);
                     };
-                    dealer.cars.forEach(function (car) {
+                    dealerCars.forEach(function (car) {
                         var result = (Math.random() * (max - min) + min).toFixed(2);
-                        switch (randomIntFromInterval(1, 4)) {
-                            case 1:
-                                car.color = "red-market";
-                                break;
-                            case 2:
-                                car.color = "green-market";
-                                break;
-                            case 3:
-                                car.color = "blue-market";
-                                break;
-                            case 4:
-                                car.color = "yellow-market";
-                                break;
-                        }
-                        switch (car.model) {
-                            case "Enclave":
-                                car.category = 1;
-                                break;
-                            case "Encore":
-                                if (car.drivetrain == "AWD") {
-                                    car.category = 6;
-                                } else {
-                                    car.category = 7;
-                                }
-                                break;
-                            case "LaCrosse":
-                                car.category = 3;
-                                break;
-                            case "Regal":
-                                car.category = 4;
-                                break;
-                            case "Verano":
-                                car.category = 5;
-                                break;
-                        }
+                        // switch (randomIntFromInterval(1, 4)) {
+                        //     case 1:
+                        //         car.color = "red-market";
+                        //         break;
+                        //     case 2:
+                        //         car.color = "green-market";
+                        //         break;
+                        //     case 3:
+                        //         car.color = "blue-market";
+                        //         break;
+                        //     case 4:
+                        //         car.color = "yellow-market";
+                        //         break;
+                        // }
+                        // switch (car.model) {
+                        //     case "Enclave":
+                        //         car.category = 1;
+                        //         break;
+                        //     case "Encore":
+                        //         if (car.drivetrain == "AWD") {
+                        //             car.category = 6;
+                        //         } else {
+                        //             car.category = 7;
+                        //         }
+                        //         break;
+                        //     case "LaCrosse":
+                        //         car.category = 3;
+                        //         break;
+                        //     case "Regal":
+                        //         car.category = 4;
+                        //         break;
+                        //     case "Verano":
+                        //         car.category = 5;
+                        //         break;
+                        // }
                         car.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
                         car.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
                     });

@@ -110,11 +110,7 @@ angular
         return {
             getInformationById: function (dealerCarId) {
                 var DealerCar = $resource(baseUrl + '/information/:delearId', { dealerCarId: '@id' });
-                return DealerCar.get({ dealerCarId: 123 });
-            },
-            getCarById: function (dealerCarId) {
-                var DealerCar = $resource(baseUrl + '/:delearId', { dealerCarId: '@id' });
-                return DealerCar.get({ dealerCarId: 123 });
+                return DealerCar.get({ dealerCarId: 1 });
             },
             getChartConfig: function ($scope) {
                 var DealerCar = $resource(baseUrl + '/chartData/:delearId', { dealerCarId: '@id' });
@@ -236,10 +232,10 @@ angular
                 return DealerCar.query({ dealerCarId: 123 });
             },
             getPriceTrend: function () {
-                var DealerCar = $resource(baseUrl + '/pricetrend/:delearId', { dealerCarId: '@id' });
-                return DealerCar.get({ dealerCarId: 123 })
+                var DealerCar = $resource(baseUrl + '/chartSeries?stockCarId=:stockCarId', { stockCarId: '@id' });
+                return DealerCar.get({ stockCarId: 1 })
                     .$promise
-                    .then(function (chartData) {
+                    .then(function (chartSeries) {
                         var result = {
                             options: {
                                 chart: {
@@ -265,10 +261,12 @@ angular
                                     display: 'none'
                                 }
                             },
-                            series: chartData.chartSeries,
-                            xAxis: {
-                                categories: chartData.xAxisCategories
-                            },
+                            series: [{
+                                name: chartSeries.name,
+                                data: chartSeries.data,
+                                carId: chartSeries.carId
+                            }],
+                            xAxis: { type: 'datetime' },
                             yAxis: {
                                 title: {
                                     text: '',
@@ -282,8 +280,8 @@ angular
                     });
             },
             getDealerCompetitors: function () {
-                var DealerCar = $resource(baseUrl + '/dealercompetitors/:delearId', { dealerCarId: '@id' });
-                return DealerCar.query({ dealerCarId: 123 })
+                var DealerCar = $resource(baseUrl + '/dealercompetitors?stockCarId=:stockCarId', { stockCarId: '@id' });
+                return DealerCar.query({ stockCarId: 1 })
             }
         };
     })

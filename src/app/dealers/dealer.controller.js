@@ -2,9 +2,9 @@
 
 class DealerCtrl {
   constructor($scope, highchartsNG, dealerService) {
-    dealerService.getDealerById().then(function (dealer) {
+    dealerService.getDealerById().then(function (dealerCars) {
       var categories = dealerService.getCategories();
-      var cars = dealer.cars;
+      var cars = dealerCars;
       $scope.toogleGropPanel = function (flag) {
         $scope.groupPanel = flag;
       };
@@ -12,7 +12,7 @@ class DealerCtrl {
       $scope.categoryList = [{ name: "All", id: 0 }];
       $scope.currentCategory = 0;
       $scope.filters = dealerService.getFilters();
-      $scope.cars = garajModule.getDealers(cars, categories, $scope.currentCategory);
+      $scope.cars = cars;
       $scope.groups = garajModule.createGropus($scope.cars, $scope.filters);
 
       $scope.closeFilter = function (index) {

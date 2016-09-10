@@ -1,5 +1,5 @@
 angular
-    .module("carChartModule", ['highcharts-ng', 'carModule'])
+    .module("carChartModule", ['carModule'])
     .directive('carChart', function () {
         return {
             restrict: 'E',
