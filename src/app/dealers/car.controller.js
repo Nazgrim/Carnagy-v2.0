@@ -1,7 +1,11 @@
 'use strict';
 class CarCtrl {
-    constructor($scope, carService, id, highchartsNG) {
-        carService.getInformationById()
+    constructor($scope, carService, carId, stockCarId ,highchartsNG) {
+        console.log(carId);
+        console.log(stockCarId);
+        $scope.carId=carId;
+        $scope.stockCarId=stockCarId;
+        carService.getInformationById($scope.carId)
             .$promise
             .then(function (carInformation) {
                 $scope.carInformation = carInformation;
@@ -24,6 +28,6 @@ class CarCtrl {
     }
 }
 
-CarCtrl.$inject = ['$scope', 'carService', 'id', 'highchartsNG'];
+CarCtrl.$inject = ['$scope', 'carService', 'carId', 'stockCarId', 'highchartsNG'];
 
 export default CarCtrl;

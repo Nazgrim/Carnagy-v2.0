@@ -5,7 +5,7 @@ angular
             restrict: 'E',
             templateUrl: '/app/directives/price-trend/price-trend.html',
             controller: function ($scope, carService) {
-                carService.getPriceTrend().then(function (result) {
+                carService.getPriceTrend($scope.stockCarId).then(function (result) {
                     $scope.chartConfig1 = result;
                 });
             }

@@ -17,10 +17,13 @@ angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', '
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('car', {
-                url: '/car/:id',
+                url: '/car/:carId/:stockCarId',
                 resolve: {
-                    id: function ($stateParams) {
-                        return $stateParams.id
+                    carId: function ($stateParams) {
+                        return $stateParams.carId
+                    },
+                    stockCarId: function ($stateParams) {
+                        return $stateParams.stockCarId
                     },
                 },
                 templateUrl: 'app/dealers/car.html',

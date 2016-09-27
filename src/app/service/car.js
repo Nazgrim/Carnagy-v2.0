@@ -108,13 +108,13 @@ angular
             return xAxisPlotBands;
         }
         return {
-            getInformationById: function (dealerCarId) {
-                var DealerCar = $resource(baseUrl + '/information/:delearId', { dealerCarId: '@id' });
-                return DealerCar.get({ dealerCarId: 1 });
+            getInformationById: function (carId) {
+                var DealerCar = $resource(baseUrl + '/information?carId=:carId', { carId: '@carId' });
+                return DealerCar.get({ carId: carId });
             },
             getChartConfig: function ($scope) {
-                var DealerCar = $resource(baseUrl + '/chartData/:delearId', { dealerCarId: '@id' });
-                return DealerCar.get({ dealerCarId: 123 })
+                var DealerCar = $resource(baseUrl + '/chartData?carId=:carId', { carId: '@carId' });
+                return DealerCar.get({ carId: $scope.carId })
                     .$promise
                     .then(function (chartData) {
                         var stepForLine = Math.round((chartData.max - chartData.min) / chartData.seriesData.length);
@@ -231,9 +231,9 @@ angular
                 var DealerCar = $resource(baseUrl + '/similarcars/:delearId', { dealerCarId: '@id' });
                 return DealerCar.query({ dealerCarId: 123 });
             },
-            getPriceTrend: function () {
-                var DealerCar = $resource(baseUrl + '/chartSeries?stockCarId=:stockCarId', { stockCarId: '@id' });
-                return DealerCar.get({ stockCarId: 1 })
+            getPriceTrend: function (stockCarId) {
+                var DealerCar = $resource(baseUrl + '/chartSeries?stockCarId=:stockCarId', { stockCarId: '@stockCarId' });
+                return DealerCar.get({ stockCarId: stockCarId })
                     .$promise
                     .then(function (chartSeries) {
                         var result = {
@@ -279,9 +279,9 @@ angular
                         return result;
                     });
             },
-            getDealerCompetitors: function () {
+            getDealerCompetitors: function (stockCarId) {
                 var DealerCar = $resource(baseUrl + '/dealercompetitors?stockCarId=:stockCarId', { stockCarId: '@id' });
-                return DealerCar.query({ stockCarId: 1 })
+                return DealerCar.query({ stockCarId: stockCarId })
             }
         };
     })

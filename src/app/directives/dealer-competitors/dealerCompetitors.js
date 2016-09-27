@@ -6,7 +6,7 @@ angular
             templateUrl: '/app/directives/dealer-competitors/dealer-competitors.html',
             controller: ['$scope', 'carService', function ($scope, carService) {
                 carService
-                $scope.dealers = carService.getDealerCompetitors().$promise.then(function (dealerCompetitors) {
+                $scope.dealers = carService.getDealerCompetitors($scope.stockCarId).$promise.then(function (dealerCompetitors) {
                     $scope.dealers = dealerCompetitors;
                 });
                 $scope.showDetailed = function (dealer) {
