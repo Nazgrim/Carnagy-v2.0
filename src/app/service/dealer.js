@@ -87,7 +87,6 @@ angular
             dealer.id = index;
             parser.href = dealer.dealerUrl;
             dealer.domain = parser.hostname;
-            dealer.year = 2015;
         });
         var selectedDealer = function (dealers, dealerName) {
             dealers.forEach(function (dealer) {
@@ -154,42 +153,8 @@ angular
                         return Math.floor(Math.random() * (max - min + 1) + min);
                     };
                     dealerCars.forEach(function (car) {
+                        car.imagePath = "http://localhost/WepApi/image/cars/" + car.id + ".jpg";
                         var result = (Math.random() * (max - min) + min).toFixed(2);
-                        // switch (randomIntFromInterval(1, 4)) {
-                        //     case 1:
-                        //         car.color = "red-market";
-                        //         break;
-                        //     case 2:
-                        //         car.color = "green-market";
-                        //         break;
-                        //     case 3:
-                        //         car.color = "blue-market";
-                        //         break;
-                        //     case 4:
-                        //         car.color = "yellow-market";
-                        //         break;
-                        // }
-                        // switch (car.model) {
-                        //     case "Enclave":
-                        //         car.category = 1;
-                        //         break;
-                        //     case "Encore":
-                        //         if (car.drivetrain == "AWD") {
-                        //             car.category = 6;
-                        //         } else {
-                        //             car.category = 7;
-                        //         }
-                        //         break;
-                        //     case "LaCrosse":
-                        //         car.category = 3;
-                        //         break;
-                        //     case "Regal":
-                        //         car.category = 4;
-                        //         break;
-                        //     case "Verano":
-                        //         car.category = 5;
-                        //         break;
-                        // }
                         car.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
                         car.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
                     });

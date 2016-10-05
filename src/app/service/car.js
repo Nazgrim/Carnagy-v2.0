@@ -4,16 +4,10 @@ angular
     .module("carModule")
     .service("carService", function ($resource) {
         var baseUrl = 'http://localhost/WepApi/api/dealercar';
-        function getPoint(price, min, stepForLine) {
-            var difMinPrice = price - min;
-            var result = difMinPrice * 2 / stepForLine / 2 - 0.5;
-            console.log(result);
-            return result;
-        }
-        function getXaxisPlotLines(msrpPrice, avrPrice, dealerPrice, min, stepForLine) {
+        function getXaxisPlotLines(msrpPrice, avrPrice, dealerPrice) {
             return [
                 {
-                    value: getPoint(msrpPrice, min, stepForLine),
+                    value: msrpPrice,
                     width: 2,
                     color: '#FF0000',
                     label: {
@@ -24,7 +18,7 @@ angular
                     zIndex: 5
                 },
                 {
-                    value: getPoint(avrPrice, min, stepForLine),
+                    value: avrPrice,
                     width: 2,
                     color: '#00FF00',
                     label: {
@@ -35,7 +29,7 @@ angular
                     zIndex: 5
                 },
                 {
-                    value: getPoint(dealerPrice, min, stepForLine),
+                    value: dealerPrice,
                     width: 2,
                     color: '#0000FF',
                     label: {
@@ -47,7 +41,7 @@ angular
                 }
             ]
         }
-        function getXaxisPlotBands(seriesDataLength, $scope, min, stepForLine) {
+        function getXaxisPlotBands(seriesDataLength, $scope, min, max) {
             var xAxisPlotBands = [];
             var xAxisPlotBandsDefault = [
                 {
@@ -71,18 +65,16 @@ angular
                     color: '#4ac336'
                 },
             ];
-            var from = -0.5;
-            var currentPrice = min;
-            var step = Math.round(seriesDataLength / xAxisPlotBandsDefault.length);
+            var from = min;
+            var step = Math.round((max - min) / xAxisPlotBandsDefault.length);
             for (var i = 0; i < xAxisPlotBandsDefault.length; i++) {
                 var to = from + step;
-                currentPrice = currentPrice + (to * stepForLine);
                 var xAxisPlotBandDefault = xAxisPlotBandsDefault[i];
-                var labelText = '<div><b>' + xAxisPlotBandDefault.labelBtext + '</b></div><div>Less than ' + Math.round(currentPrice);
+                var labelText = '<div><b>' + xAxisPlotBandDefault.labelBtext + '</b></div><div>Less than ' + Math.round(to) + '$';
                 if (i == xAxisPlotBandsDefault.length - 1) {
                     labelText += ' or more';
                 }
-                labelText += '$</div>';
+                labelText += '</div>';
                 xAxisPlotBands.push({
                     from: from,
                     to: to,
@@ -114,13 +106,14 @@ angular
             },
             getChartConfig: function ($scope) {
                 var DealerCar = $resource(baseUrl + '/chartData?carId=:carId', { carId: '@carId' });
-                return DealerCar.get({ carId: $scope.carId })
+                return DealerCar.get({ carId: $scope.stockCarId })
                     .$promise
                     .then(function (chartData) {
-                        var stepForLine = Math.round((chartData.max - chartData.min) / chartData.seriesData.length);
-                        console.log(stepForLine);
-                        var xAxisplotLines = getXaxisPlotLines(chartData.msrpPrice, chartData.avrPrice, chartData.dealerPrice, chartData.min, stepForLine);
-                        var xAxisPlotBands = getXaxisPlotBands(chartData.seriesData.length, $scope, chartData.min, stepForLine);
+                        var max = Math.ceil(chartData.max / 1000) * 1000;
+                        var min = Math.floor(chartData.min / 1000) * 1000;
+                        var step = (max - min) / 20;
+                        var xAxisplotLines = getXaxisPlotLines(chartData.msrpPrice, chartData.avrPrice, chartData.dealerPrice);
+                        var xAxisPlotBands = getXaxisPlotBands(chartData.seriesData.length, $scope, min, max);
 
                         return {
                             "options": {
@@ -205,14 +198,11 @@ angular
                             xAxis: {
                                 plotLines: xAxisplotLines,
                                 plotBands: xAxisPlotBands,
-                                lineWidth: 0,
-                                minorGridLineWidth: 0,
-                                lineColor: 'transparent',
-                                labels: {
-                                    enabled: false
-                                },
-                                minorTickLength: 0,
-                                tickLength: 0
+                                startOnTick: true,
+                                minPadding: 0,
+                                min: min,
+                                max: max,
+                                tickInterval: step,
                             },
                             series: [
                                 {
@@ -221,7 +211,9 @@ angular
                                     data: chartData.seriesData,
                                     tooltip: {
                                         valueSuffix: ' count'
-                                    }
+                                    },
+                                    pointStart: min,
+                                    pointInterval: step,
                                 }
                             ]
                         };

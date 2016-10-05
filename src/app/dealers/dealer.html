@@ -26,7 +26,7 @@
     <div class="col-md-12">
         <div class="x_panel">
             <div class="x_title clearfix">
-                <h2>Weekly Summary <small>Activity shares</small></h2>
+                <h2>Weekly Summary</h2>
                 <button ng-if="!groupPanel" ng-click="toogleGropPanel(true)" class="btn btn-primary pull-right">Hide GroupPanel</button>
                 <button ng-if="groupPanel" ng-click="toogleGropPanel(false)" class="btn btn-primary pull-right">Show GroupPanel</button>
             </div>
@@ -35,7 +35,7 @@
                     <div class="col-md-12">
                         <div>
                             <div class="btn-group pull-left">
-                                <button ng-click="closeFilter($index) " ng-repeat="filter in filters | orderBy: 'order'" class="btn btn-default ">{{filter.title}} <span class="glyphicon glyphicon-remove "></span></button>
+                                <button ng-click="closeFilter($index) " ng-repeat="filter in filters | orderBy" class="btn btn-default ">{{filter.title}} <span class="glyphicon glyphicon-remove "></span></button>
                             </div>
                             <div class="btn-group pull-right " ng-if="deleteFilters.length!=0 ">
                                 <div class="btn-group ">
@@ -50,34 +50,33 @@
                     <div class="col-md-12">
                         <div class="form-inline">
                             <div class="form-group clearfix">
-                                <select class="form-control">
-                                    <option>All years</option>
-                                    <option>2015</option>
-                                    <option>2014</option>
+                                <select class="form-control" ng-model="selectedYear" ng-options="year for year in years | orderBy">
+                                    <option value="" selected>All years</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>All Makes</option>
-                                    <option>Buick</option>
-                                    <option>Cadilac</option>
-                                    <option>GMC</option>
+                                <select class="form-control" ng-model="selectedMake" ng-options="make for make in makes | orderBy">
+                                    <option value="" selected>All Makes</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>All Body Styles</option>
-                                    <option>SUV</option>
-                                    <option>Coupe</option>
-                                    <option>Sedan</option>
+                                <select class="form-control" ng-model="selectedModel" ng-options="model for model in models | orderBy">
+                                    <option value="" selected>All models</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>Any price</option>
-                                    <option>$36000-38000</option>
-                                    <option>$38000-40000</option>
-                                    <option>$40000-42000</option>
+                                <select class="form-control" ng-model="selectedBodyType" ng-options="bodyType for bodyType in bodyTypes | orderBy">
+                                    <option value="" selected>All Body Styles</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" ng-model="selectedStyleTrim" ng-options="styleTrim for styleTrim in styleTrims | orderBy">
+                                    <option value="" selected>All StyleTrim</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" ng-model="selectedDrivetrain" ng-options="drivetrain for drivetrain in drivetrains | orderBy">
+                                    <option value="" selected>All Drivetrain</option>
                                 </select>
                             </div>
                             <div class="form-group pull-right">
@@ -99,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat-start="group in groups ">
+                        <tr ng-repeat-start="group in groups">
                             <td ng-class="group.color "></td>
                             <td>
                                 <span class="glyphicon glyphicon-menu-down " ng-click="showDetailed(group) "></span>
@@ -109,36 +108,43 @@
                         </tr>
                         <tr ng-repeat-end=" " ng-hide="!group.isDetailed ">
                             <td colspan="9 ">
-                                <table class="table ">
-                                    <thead>
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Maker</th>
-                                            <th>Model</th>
-                                            <th>Body Type</th>
-                                            <th>Trim</th>
-                                            <th>Drivetrain</th>
-                                            <th>Price ($)</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="car in group.value ">
-                                            <td>{{car.year}}</td>
-                                            <td>{{car.make}}</td>
-                                            <td>{{car.model}}</td>
-                                            <td>{{car.bodyType}}</td>
-                                            <td>{{car.styleTrim}}</td>
-                                            <td>{{car.drivetrain}}</td>
-                                            <td>{{car.price | number: 2}}&nbsp;
-                                                <span style="color: {{car.amountColor}} ">{{car.amountDifference}}</span>
-                                            </td>
-                                            <td>
-                                                <a ui-sref="car({ carId: car.id, stockCarId:car.stockCarId}) " class="btn btn-primary ">Detail</a>
-                                            </td>
-                                        </tr>
-                                </table>
+                                <div class="car" ng-repeat="car in group.value ">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img style="width:100%; height:132px;" ng-src="{{car.imagePath}}" />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-9 tile_stats_count">
+                                                    <div class="left"></div>
+                                                    <div class="right">
+                                                        <h1>{{car.year}} {{car.make}} {{car.model}}</h1>
+                                                        <p>
+                                                            <span>Bodytype - {{car.bodyType}}, Trim - {{car.styleTrim}}, Drivetrain - {{car.drivetrain}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 tile_stats_count">
+                                                    <div class="left"></div>
+                                                    <div class="right">
+                                                        <span class="count_top"><i class="fa fa-usd"></i> Your Price</span>
+                                                        <div class="count">{{car.price}}</div>
+                                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{car.amountDifference}} </i> From last Week</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3 col-md-offset-9 tile_stats_count text-right">
+                                                    <a ui-sref="car({ carId: car.id, stockCarId:car.stockCarId}) " class="btn btn-primary ">Detail</a>
+                                                    <a ng-href="{{car.url}}" class="btn btn-primary ">Open</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+                </div>
             </div>
         </div>
-    </div>

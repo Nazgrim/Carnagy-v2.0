@@ -32,7 +32,6 @@ var garajModule = (function () {
         createGropus: function (cars, filters) {
             var result = {}
             cars.forEach(function (car, index) {
-                car["year"] = 2015;
                 var keyArray = [];
                 var keyObject = {};
                 filters.forEach(function (filter) {
