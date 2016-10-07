@@ -9,7 +9,7 @@ angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', '
     'dealerModule', 'similarCarModule', 
     'carChartModule', 
     'carWidgetsPanelModule','carInformationModule', 
-    'carModule','priceTrendModule','dealerCompetitorsModule'])
+    'carModule','priceTrendModule','dealerCompetitorsModule','errSrcModule'])
     .controller('SidebarCtrl', SidebarCtrl)
     .controller('DealerCtrl', DealerCtrl)
     .controller('CarCtrl', CarCtrl)

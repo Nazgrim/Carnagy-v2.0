@@ -5,70 +5,41 @@
                 <h3>Dealers</h3>
             </div>
             <div class="ibox-content">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                            </th>
-                            <th ng-click="orderByField('name')" ng-class="{ 'sorted': orderBy.field === 'name', 'sorted-desc': orderBy.desc }">Name</th>
-                            <th ng-click="orderByField('dealerPlace')" ng-class="{ 'sorted': orderBy.field === 'dealerPlace', 'sorted-desc': orderBy.desc }">Location</th>
-                            <th ng-click="orderByField('domain')" ng-class="{ 'sorted': orderBy.field === 'domain', 'sorted-desc': orderBy.desc }">Website</th>
-                            <th ng-click="orderByField('cars')" ng-class="{ 'sorted': orderBy.field === 'cars', 'sorted-desc': orderBy.desc }">Cars</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat-start="dealer in dealers">
-                            <td>
-                                <span class="glyphicon glyphicon-menu-down" ng-click="showDetailed(dealer)"></span></td>
-                            <td>
-                                {{dealer.name}}
-                            </td>
-                            <td>
-                                <span class="glyphicon glyphicon-map-marker"></span>{{dealer.city}}</td>
-                            <td>
-                                <a ng-href="{{dealer.url}}" target="_blank">
-                                    <span class="glyphicon glyphicon-link"></span>&nbsp;{{dealer.webSiteName}}
-                                </a>
-                            </td>
-                            <td>{{dealer.cars.length}}</td>
-                        </tr>
-                        <tr ng-repeat-end="" ng-hide="!dealer.isDetailed">
-                            <td></td>
-                            <td colspan="4">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Maker</th>
-                                            <th>Model</th>
-                                            <th>Body Type</th>
-                                            <th>Trim</th>
-                                            <th>Drivetrain</th>
-                                            <th>Price ($)</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="car in dealer.cars">
-                                            <td>{{car.year}}</td>
-                                            <td>{{car.maker}}</td>
-                                            <td>{{car.model}}</td>
-                                            <td>{{car.bodyType}}</td>
-                                            <td>{{car.styleTrim}}</td>
-                                            <td>{{car.drivetrain}}</td>
-                                            <td>{{car.price.value}}
-                                                <span ng-if='car.price.difference>0' style="color: green">+{{car.price.difference}}</span>
-                                                <span ng-if='car.price.difference<0' style="color: red">{{car.price.difference}}</span>
-                                            </td>
-                                            <td>
-                                                <a ng-href="{{car.url}}" class="btn btn-primary">Open</a>
-                                            </td>
-                                        </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="car" ng-repeat="car in filteredCars">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img style="width:100%; height:132px;" ng-src="{{car.imagePath}}" err-src="./app/img/default-car.gif" />
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-9 tile_stats_count">
+                                    <div class="left"></div>
+                                    <div class="right">
+                                        <h1>{{car.year}} {{car.maker}} {{car.model}}</h1>
+                                        <p>
+                                            <span>Bodytype - {{car.bodyType}}, Trim - {{car.styleTrim}}, Drivetrain - {{car.drivetrain}}</span>
+                                        </p>
+                                        <p>Dealer - {{car.dealerName}}<span ng-if="car.dealerLocation">, from {{car.dealerLocation}}</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 tile_stats_count">
+                                    <div class="left"></div>
+                                    <div class="right">
+                                        <span class="count_top"><i class="fa fa-usd"></i> Price</span>
+                                        <div class="count">{{car.price.value}}</div>
+                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{car.price.difference}} </i> From last Week</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 col-md-offset-9 tile_stats_count text-right">
+                                    <a ng-href="{{car.url}}" class="btn btn-primary ">Open</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <uib-pagination max-size="maxSize" total-items="totalItems" ng-model="currentPage" items-per-page="numPerPage"></uib-pagination>
             </div>
         </div>
     </div>
