@@ -105,7 +105,7 @@ angular
                 return DealerCar.get({ carId: carId });
             },
             getChartConfig: function ($scope) {
-                var DealerCar = $resource(baseUrl + '/chartData?carId=:carId', { carId: '@carId' });
+                var DealerCar = $resource(baseUrl + '/chartData?carId=:carId&stockCarId=:stockCarId', { carId: '@carId' });
                 return DealerCar.get({ carId: $scope.stockCarId })
                     .$promise
                     .then(function (chartData) {
