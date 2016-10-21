@@ -5,15 +5,33 @@ import DealerCtrl from './dealers/dealer.controller';
 import CarCtrl from './dealers/car.controller';
 import ModalSimilarCarCtrl from './dealers/modalSimilarCar.controller';
 
-angular.module('carnagy', ['ui.router','ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'ui.select', 'highcharts-ng',
-    'dealerModule', 'similarCarModule', 
-    'carChartModule', 
-    'carWidgetsPanelModule','carInformationModule', 
-    'carModule','priceTrendModule','dealerCompetitorsModule','errSrcModule'])
+angular.module('carnagy', ['ui.router', 'ngAnimate', 'ngCookies', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'ui.select', 'highcharts-ng',
+    'dealerModule', 'similarCarModule',
+    'carChartModule',
+    'carWidgetsPanelModule', 'carInformationModule',
+    'carModule', 'priceTrendModule', 'dealerCompetitorsModule', 'errSrcModule', 'ui.grid', 'ui.grid.edit', 
+    'smart-table'])
     .controller('SidebarCtrl', SidebarCtrl)
     .controller('DealerCtrl', DealerCtrl)
     .controller('CarCtrl', CarCtrl)
-    .controller('ModalSimilarCarCtrl', ModalSimilarCarCtrl)   
+    .controller('ModalSimilarCarCtrl', ModalSimilarCarCtrl)
+    .filter('myStrictFilter', function ($filter) {
+        return function (input, predicate) {
+            return $filter('filter')(input, predicate, true);
+        }
+    })
+    .filter('unique1', function () {
+        return function (arr, field) {
+            var o = {}, i, l = arr.length, r = [];
+            for (i = 0; i < l; i += 1) {
+                o[arr[i][field]] = arr[i];
+            }
+            for (i in o) {
+                r.push(o[i]);
+            }
+            return r;
+        };
+    })
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('car', {

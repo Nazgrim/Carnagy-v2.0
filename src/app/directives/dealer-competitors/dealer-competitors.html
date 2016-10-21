@@ -1,46 +1,82 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="ibox">
-            <div class="ibox-title">
-                <h3>Dealers</h3>
-            </div>
-            <div class="ibox-content">
-                <div class="car" ng-repeat="car in filteredCars">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img style="width:100%; height:132px;" ng-src="{{car.imagePath}}" err-src="./app/img/default-car.gif" />
-                        </div>
-                        <div class="col-md-9">
-                            <div class="row">
-                                <div class="col-md-9 tile_stats_count">
-                                    <div class="left"></div>
-                                    <div class="right">
-                                        <h1>{{car.year}} {{car.maker}} {{car.model}}</h1>
-                                        <p>
-                                            <span>Bodytype - {{car.bodyType}}, Trim - {{car.styleTrim}}, Drivetrain - {{car.drivetrain}}</span>
-                                        </p>
-                                        <p>Dealer - {{car.dealerName}}<span ng-if="car.dealerLocation">, from {{car.dealerLocation}}</span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 tile_stats_count">
-                                    <div class="left"></div>
-                                    <div class="right">
-                                        <span class="count_top"><i class="fa fa-usd"></i> Price</span>
-                                        <div class="count">{{car.price.value}}</div>
-                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{car.price.difference}} </i> From last Week</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 col-md-offset-9 tile_stats_count text-right">
-                                    <a ng-href="{{car.url}}" class="btn btn-primary ">Open</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <uib-pagination max-size="maxSize" total-items="totalItems" ng-model="currentPage" items-per-page="numPerPage"></uib-pagination>
-            </div>
-        </div>
-    </div>
+	<div class="col-md-12">
+		<div class="ibox">
+			<div class="ibox-title">
+				<h3>Dealers</h3>
+			</div>
+			<div class="ibox-content">
+				<table st-table="displayCollection" st-pipe="callServer" class="table table-striped">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Year</th>
+							<th>Maker</th>
+							<th>Model</th>
+							<th>Body type</th>
+							<th>Trim</th>
+							<th>Drivetrain</th>
+							<th>Price</th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+						<tr ng-repeat-start="row in displayCollection">
+							<td>
+								<span ng-class="{'glyphicon-menu-up': !row.isDetailed, 'glyphicon-menu-down': row.isDetailed }" class="glyphicon" ng-click="showDetailed(row)"></span>
+							</td>
+							<td>{{row.year}}</td>
+							<td>{{row.make}}</td>
+							<td>{{row.model}}</td>
+							<td>{{row.bodyType}}</td>
+							<td>{{row.styleTrim}}</td>
+							<td>{{row.drivetrain}}</td>
+							<td>{{row.price.value|currency}}
+								<span ng-if='row.price.difference>0' style="color: green">+{{row.price.difference}}</span>
+								<span ng-if='row.price.difference<0' style="color: red">{{row.price.difference}}</span>
+								<td>
+									<a ng-href="{{row.url}}" class="btn btn-primary ">Open</a>
+								</td>
+						</tr>
+						<tr ng-repeat-end=" " ng-hide="!row.isDetailed ">
+							<td colspan="9">
+								<div class="row">
+									<div class="col-md-10 tile_stats_count">
+										<div>
+											<img style="display: inline-block; padding-left:10px; padding-right:10px" class="resize" ng-src="{{row.imagePath}}" err-src="./app/img/default-car.gif"
+											/>
+											<div style="display: inline-block;" class="left-border-with-padding">
+												<h1>{{row.year}} {{row.make}} {{row.model}}</h1>
+												<p>
+													<span>Bodytype - {{row.bodyType}}, Trim - {{row.styleTrim}}, Drivetrain - {{row.drivetrain}}</span>
+												</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-2 tile_stats_count">
+										<div class="left-border-with-padding">
+											<span class="count_top"><i class="fa fa-usd"></i> Price</span>
+											<div class="count">{{row.price.value}}</div>
+											<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{row.price.difference}} </i> From last Week</span>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+						<tr>
+							<td colspan="9" class="text-center">Loading ... </td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+
+							<td class="text-left" colspan="7">
+								<st-pagination st-items-by-page="itemsByPage"></st-pagination>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

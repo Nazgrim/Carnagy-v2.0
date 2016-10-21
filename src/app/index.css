@@ -162,3 +162,11 @@ tr.sub-row td{
     height: 150px;
     vertical-align: middle !important;
 }
+img.resize{
+    width: auto; 
+    height: 150px;
+}
+.left-border-with-padding{
+    padding-left:10px;
+    border-left:2px solid #ADB2B5
+}

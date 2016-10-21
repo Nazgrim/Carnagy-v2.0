@@ -41,7 +41,7 @@ angular
                 }
             ]
         }
-        function getXaxisPlotBands(seriesDataLength, $scope, min, max) {
+        function getXaxisPlotBands(seriesDataLength, min, max) {
             var xAxisPlotBands = [];
             var xAxisPlotBandsDefault = [
                 {
@@ -79,16 +79,6 @@ angular
                     from: from,
                     to: to,
                     color: xAxisPlotBandDefault.color,
-                    events: {
-                        mouseover: function (e) {
-                            $scope.selectedLegend.currentBandSelected = this.options.chartValue;
-                            $scope.$apply();
-                        },
-                        mouseout: function (e) {
-                            $scope.selectedLegend.currentBandSelected = $scope.selectedLegend.bandSelected;
-                            $scope.$apply();
-                        },
-                    },
                     label: {
                         text: labelText,
                         align: 'left',
@@ -113,8 +103,13 @@ angular
                         var min = Math.floor(chartData.min / 1000) * 1000;
                         var step = (max - min) / 20;
                         var xAxisplotLines = getXaxisPlotLines(chartData.msrpPrice, chartData.avrPrice, chartData.dealerPrice);
-                        var xAxisPlotBands = getXaxisPlotBands(chartData.seriesData.length, $scope, min, max);
-
+                        var xAxisPlotBands = getXaxisPlotBands(chartData.seriesData.length, min, max);
+                        var chartSeries = chartData.seriesData.map(function (e) {
+                            return {
+                                y: e.value,
+                                dealersId: e.dealersId
+                            }
+                        });
                         return {
                             "options": {
                                 plotOptions: {
@@ -134,29 +129,26 @@ angular
                                         cursor: 'pointer',
                                         point: {
                                             events: {
-                                                mouseOver: function (e) {
-                                                    $scope.selectedLegend.currentSelected = 'series';
+                                                click: function (e) {
+                                                    console.log(e);
+                                                    console.log(this);
+                                                    $scope.selectedLegend.people = this.y;
+                                                    if (!this.selected) {
+                                                        console.log('emit');
+                                                        $scope.$emit('selectSeriesUp', this.dealersId);
+                                                    }
+                                                    else {
+                                                        console.log('emit');
+                                                        $scope.$emit('selectSeriesUp', []);
+                                                    }
+                                                    $scope.selectedLegend.selected = !this.selected;
+                                                    $scope.selectedLegend.from = this.series.data[this.index - 1].category;
+                                                    $scope.selectedLegend.to = this.category;
+
                                                     $scope.$apply();
                                                 },
-                                                mouseOut: function (e) {
-                                                    $scope.selectedLegend.currentSelected = $scope.selectedLegend.selected;
-                                                    $scope.$apply();
-                                                }
                                             }
                                         }
-                                        // point: {
-                                        //     events: {
-                                        //         click: function () {
-                                        //             $("#selectedSeries").text('Category: ' + this.category + ', value: ' + this.y);
-                                        //         },
-                                        //         mouseOver: function () {
-                                        //             $("#focusedSeries").text('Category: ' + this.category + ', value: ' + this.y);
-                                        //         },
-                                        //         mouseOut: function () {
-                                        //             $("#focusedSeries").text('');
-                                        //         }
-                                        //     }
-                                        // }
                                     },
                                     column: {
                                         states: {
@@ -189,6 +181,9 @@ angular
                                     display: 'none'
                                 }
                             },
+                            credits: {
+                                enabled: false
+                            },
                             yAxis: {
                                 title: {
                                     text: '',
@@ -208,7 +203,7 @@ angular
                                 {
                                     name: 'Market',
                                     type: 'column',
-                                    data: chartData.seriesData,
+                                    data: chartSeries,
                                     tooltip: {
                                         valueSuffix: ' count'
                                     },
@@ -252,6 +247,9 @@ angular
                                 style: {
                                     display: 'none'
                                 }
+                            },
+                            credits: {
+                                enabled: false
                             },
                             series: [{
                                 name: chartSeries.name,
