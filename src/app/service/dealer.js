@@ -143,22 +143,17 @@ angular
             getProvinces: function () {
                 return provinces;
             },
-            getDealerById: function (id) {
+            getDealerCars: function (dealerId) {
                 var Dealer = $resource('http://localhost/WepApi/api/dealer/dealercars/:delearId', { delearId: '@id' });
-                return Dealer.query({ delearId: 1 }, function (dealerCars) {
-                    //dealer.phone = dealer.phone == null ? '888-307-1817' : dealer.phone;
-                    var max = 1;
-                    var min = -2;
-                    function randomIntFromInterval(min, max) {
-                        return Math.floor(Math.random() * (max - min + 1) + min);
-                    };
+                return Dealer.query({ delearId: dealerId }, function (dealerCars) {
                     dealerCars.forEach(function (car) {
-                        car.imagePath = "http://localhost/WepApi/image/cars/" + car.id + ".jpg";
-                        var result = (Math.random() * (max - min) + min).toFixed(2);
-                        car.amountDifference = result > 0 ? '(+' + result + '%)' : '(' + result + '%)';
-                        car.amountColor = result > 0 ? '#5cb85c' : '#d9534f';
+                        car.imagePath = "http://localhost/WepApi/image/cars/" + car.id + ".jpg";;
                     });
                 }).$promise;
+            },
+            getDealerInfomation: function (dealerId) {
+                var Dealer = $resource('http://localhost/WepApi/api/dealer/dealerInformation/:id', { id: '@id' });
+                return Dealer.get({ id: dealerId }).$promise;
             },
             getCategories: function () {
                 return [

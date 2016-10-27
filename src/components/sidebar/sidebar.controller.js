@@ -1,12 +1,12 @@
 'use strict';
 
 class SidebarCtrl {
-    constructor($scope) {
-        $(function() {
+    constructor($scope, accountService) {
+        $scope.user = accountService.getCurrentUser();
+        $(function () {
             $('#sidebar-menu li ul').slideUp();
-            $('#sidebar-menu li').removeClass('active');
 
-            $('#sidebar-menu li').on('click', function() {
+            $('#sidebar-menu li').on('click', function () {
                 var link = $('a', this).attr('href');
 
                 if (link) {
@@ -24,29 +24,10 @@ class SidebarCtrl {
                     }
                 }
             });
-
-            $('#menu_toggle').click(function() {
-                if ($('body').hasClass('nav-md')) {
-                    $('body').removeClass('nav-md').addClass('nav-sm');
-                    $('.left_col').removeClass('scroll-view').removeAttr('style');
-                    $('.sidebar-footer').hide();
-
-                    if ($('#sidebar-menu li').hasClass('active')) {
-                        $('#sidebar-menu li.active').addClass('active-sm').removeClass('active');
-                    }
-                } else {
-                    $('body').removeClass('nav-sm').addClass('nav-md');
-                    $('.sidebar-footer').show();
-
-                    if ($('#sidebar-menu li').hasClass('active-sm')) {
-                        $('#sidebar-menu li.active-sm').addClass('active').removeClass('active-sm');
-                    }
-                }
-            });
         });
     }
 }
 
-SidebarCtrl.$inject = ['$scope'];
+SidebarCtrl.$inject = ['$scope', 'accountService'];
 
 export default SidebarCtrl;

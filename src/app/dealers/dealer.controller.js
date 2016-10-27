@@ -10,7 +10,8 @@ function initFilter(scope, cars, filter) {
   });
 }
 class DealerCtrl {
-  constructor($scope, highchartsNG, dealerService, uiGridConstants, $filter) {
+  constructor($scope, highchartsNG, dealerService, uiGridConstants, $filter, accountService) {
+    $scope.user = accountService.getCurrentUser();
     $scope.showDetailed = function (car) {
       if (car.isDetailed)
         car.isDetailed = false;
@@ -21,7 +22,7 @@ class DealerCtrl {
     $scope.itemsByPage = 10;
     $scope.callServer = function (tableState) {
       if ($scope.isLoading) {
-        dealerService.getDealerById().then(function (dealerCars) {
+        dealerService.getDealerCars($scope.user.dealerId).then(function (dealerCars) {
           initFilter($scope, dealerCars, ['year', 'make', 'model', 'bodyType', 'styleTrim', 'drivetrain']);
           console.log(dealerCars.length);
           tableState.pagination.numberOfPages = Math.ceil(dealerCars.length / $scope.itemsByPage);
@@ -46,14 +47,10 @@ class DealerCtrl {
         $scope.displayCollection = result;
       }
     };
-
-    highchartsNG.ready(function () {
-      hightChartCreatorModule.overrideHightChart();
-    }, this);
   }
 }
 
-DealerCtrl.$inject = ['$scope', 'highchartsNG', 'dealerService', 'uiGridConstants', '$filter'];
+DealerCtrl.$inject = ['$scope', 'highchartsNG', 'dealerService', 'uiGridConstants', '$filter', 'accountService'];
 
 export default DealerCtrl;
 

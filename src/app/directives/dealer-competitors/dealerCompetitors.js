@@ -29,6 +29,7 @@ angular
                             .then(function (dealerCars) {
                                 dealerCars.forEach(function (car) {
                                     car.imagePath = "http://localhost/WepApi/image/cars/" + car.id + ".jpg";
+                                    car.priceDifference = car.price - $scope.carInformation.dealerPrice.value;
                                 })
                                 tableState.pagination.numberOfPages = Math.ceil(dealerCars.length / itemsByPage);
                                 $scope.dealerCars = dealerCars;

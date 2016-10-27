@@ -1,56 +1,4 @@
-<div ng-include="'components/toptitles/toptitles.html'"></div>
-<div class="row">
-	<div class="col-md-8">
-		<div style="display: table; width: 100%;">
-			<div class="x_panel" style="height:170px;display: table-cell; width: 100%;vertical-align: middle; ">
-				<div class="x_content" style="">
-					<div class="row">
-						<div class="col-md-3 text-center">
-							<div style="vertical-align: middle;display: table-cell;heigth:100%">
-								<img src="../app/img/logo.jpg" alt="...">
-							</div>
-						</div>
-						<div class="col-md-9">
-							<h1>Addison</h1>
-							<p>
-								<a href="http://addisongm.com/" target="_blank">
-									<span class="glyphicon glyphicon-link"></span>&nbsp;addisongm.com <span class="glyphicon glyphicon-earphone"></span>&nbsp;905-238-2886
-								</a>
-								<br>
-								<span class="glyphicon glyphicon-map-marker"></span>&nbsp;1220 Eglinton Ave East Mississauga, ON L4W 2M7
-								<br>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="x_panel" style="height:170px">
-			<div class="x_title clearfix">
-				<span class="pull-right" style="color: #aaa;">5th</span>
-				<h3>Value</h3>
-			</div>
-			<div class="x_content">
-				<h3 class="no-margins">{{50000 | currency}}</h1>
-					<h5 style="color: #5cb85c;">+$12,152.03 (1.56%)</h3>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="x_panel" style="height:170px">
-			<div class="x_title clearfix">
-				<span class="pull-right" style="color: #aaa;">15th</span>
-				<h3>Cars</h3>
-			</div>
-			<div class="x_content">
-				<h3 class="no-margins">500</h1>
-					<h5 style="color: #d9534f;">-5 (1.14%)</h3>
-			</div>
-		</div>
-	</div>
-</div>
+<dealer-header></dealer-header>
 <div class="row">
 	<div class="col-md-12">
 		<div class="x_panel">
@@ -71,6 +19,7 @@
 									<th st-sort="styleTrim">Trim</th>
 									<th st-sort="drivetrain">Drivetrain</th>
 									<th st-sort="price">Price</th>
+									<th></th>
 									<th></th>
 								</tr>
 								<tr>
@@ -127,8 +76,8 @@
 									<td>{{row.drivetrain}}</td>
 									<td>{{row.price|currency}}</td>
 									<td>
-										<a ui-sref="car({ carId: row.id, stockCarId:row.stockCarId}) " class="btn btn-primary ">Detail</a>
-										<a ng-href="{{row.url}}" class="btn btn-primary ">Open</a>
+										<a ui-sref="car({ carId: row.id, stockCarId:row.stockCarId}) " class="btn btn-primary btn-xs">Detail</a>
+										<a ng-href="{{row.url}}" class="btn btn-primary btn-xs">Open</a>
 									</td>
 								</tr>
 								<tr ng-repeat-end=" " ng-hide="!row.isDetailed ">
@@ -136,8 +85,7 @@
 										<div class="row">
 											<div class="col-md-10 tile_stats_count">
 												<div>
-													<img style="display: inline-block; padding-left:10px; padding-right:10px" class="resize" ng-src="{{row.imagePath}}"
-													/>
+													<img style="display: inline-block; padding-left:10px; padding-right:10px" class="resize" ng-src="{{row.imagePath}}" />
 													<div style="display: inline-block;" class="left-border-with-padding">
 														<h1>{{row.year}} {{row.make}} {{row.model}}</h1>
 														<p>
@@ -159,12 +107,12 @@
 							</tbody>
 							<tbody ng-show="isLoading">
 								<tr>
-									<td colspan="7" class="text-center">Loading ... </td>
+									<td colspan="9" class="text-center">Loading ... </td>
 								</tr>
 							</tbody>
 							<tfoot>
 								<tr>
-									<td class="text-left" st-pagination="" st-items-by-page="itemsByPage" colspan="7">
+									<td class="text-left" st-pagination="" st-items-by-page="itemsByPage" colspan="9">
 									</td>
 								</tr>
 							</tfoot>

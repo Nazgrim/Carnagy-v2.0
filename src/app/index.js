@@ -1,6 +1,7 @@
 'use strict';
 
 import SidebarCtrl from '../components/sidebar/sidebar.controller';
+import TopMenuCtrl from '../components/topmenu/topmenu.controller';
 import DealerCtrl from './dealers/dealer.controller';
 import CarCtrl from './dealers/car.controller';
 import ModalSimilarCarCtrl from './dealers/modalSimilarCar.controller';
@@ -9,11 +10,12 @@ angular.module('carnagy', ['ui.router', 'ngAnimate', 'ngCookies', 'ngSanitize', 
     'dealerModule', 'similarCarModule',
     'carChartModule',
     'carWidgetsPanelModule', 'carInformationModule',
-    'carModule', 'priceTrendModule', 'dealerCompetitorsModule', 'errSrcModule', 'ui.grid', 'ui.grid.edit', 
-    'smart-table'])
+    'carModule', 'priceTrendModule', 'dealerCompetitorsModule', 'errSrcModule', 'ui.grid', 'ui.grid.edit',
+    'smart-table', 'accountModule', 'dealerHeaderModule','cgBusy'])
     .controller('SidebarCtrl', SidebarCtrl)
     .controller('DealerCtrl', DealerCtrl)
     .controller('CarCtrl', CarCtrl)
+    .controller('TopMenuCtrl', TopMenuCtrl)
     .controller('ModalSimilarCarCtrl', ModalSimilarCarCtrl)
     .filter('myStrictFilter', function ($filter) {
         return function (input, predicate) {
@@ -33,6 +35,7 @@ angular.module('carnagy', ['ui.router', 'ngAnimate', 'ngCookies', 'ngSanitize', 
         };
     })
     .config(function ($stateProvider, $urlRouterProvider) {
+
         $stateProvider
             .state('car', {
                 url: '/car/:carId/:stockCarId',

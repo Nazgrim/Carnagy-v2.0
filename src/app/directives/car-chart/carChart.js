@@ -11,7 +11,7 @@ angular
                     from: 30936,
                     to: 31248
                 };
-                $scope.chartConfig = carService.getChartConfig($scope).then(function (result) {
+                $scope.chartConfigPromise = carService.getChartConfig($scope).then(function (result) {
                     $scope.chartConfig = result;
                 });               
             }
